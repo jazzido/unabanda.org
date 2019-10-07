@@ -52,9 +52,9 @@ const Header = ({ isAdmin }) => {
                 <FontAwesomeIcon icon={faSearch} />
               </span>
             </p>
-            <Search
+            {/* <Search
               style={{ position: "absolute", top: 52, right: 12, width: 300 }}
-            />
+            /> */}
           </div>
 
           <div className="navbar-item">

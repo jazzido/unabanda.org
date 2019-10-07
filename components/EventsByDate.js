@@ -247,7 +247,7 @@ const EventsByDate = ({ style, date, query, variables = {} }) => {
             // position: -webkit-sticky;
             top: 52px;
             height: 52px;
-            z-index: 20;
+            z-index: 19;
             background-color: transparent;
 
             transition: background-color 0.2s ease;
