@@ -3,6 +3,7 @@ import App from "../components/App";
 import { useRouter } from "next/router";
 import { withApollo } from "../lib/apollo";
 import mapValues from "lodash/mapValues";
+import keyBy from "lodash/keyBy";
 
 import moment from "moment-timezone";
 import config from "../lib/config";
@@ -125,6 +126,8 @@ export const PERIODS = [
   }
 ];
 
+const periodsByPath = keyBy(PERIODS, "path");
+
 export default withApollo(props => {
   const router = useRouter();
   let { root } = router.query;
@@ -132,7 +135,7 @@ export default withApollo(props => {
     root = "";
   }
 
-  const currentPeriod = PERIODS.find(p => p.path === root);
+  const currentPeriod = periodsByPath[root];
   if (!currentPeriod) {
     return <Error statusCode="404" />;
   }
