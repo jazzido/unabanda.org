@@ -13,6 +13,7 @@ const App = ({ children }) => (
         content="initial-scale=1.0, width=device-width"
         key="viewport"
       />
+      <link rel="manifest" href="/static/manifest.json" />
     </Head>
 
     <NotificationPrompt />
