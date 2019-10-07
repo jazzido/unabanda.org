@@ -112,7 +112,7 @@ const EventCard = ({ event }) => {
 
         <div className="columns">
           <h2 className="column title is-size-3">
-            <Link href={eventUrl}>
+            <Link href="/evento/[slug]" as={`/evento/${event.slug}`}>
               <a className="has-text-black">{event.nombre}</a>
             </Link>
           </h2>
@@ -124,8 +124,7 @@ const EventCard = ({ event }) => {
         <div className="columns is-mobile">
           <div className="column is-10">
             <h3 className="title is-size-6">
-              {!event.venue && console.log(event)}
-              <Link href={`/lugar/${event.venue.slug}`}>
+              <Link href="/lugar/[slug]" as={`/lugar/${event.venue.slug}`}>
                 <a>{event.venue.nombre}</a>
               </Link>
             </h3>

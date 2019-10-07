@@ -13,7 +13,7 @@ import EventCard from "./EventCard";
 import config from "../lib/config";
 import { today } from "../lib/helpers";
 
-const queryFragments = {
+export const queryFragments = {
   eventFields: gql`
     fragment EventFields on Event {
       nombre
@@ -164,7 +164,10 @@ const EventsByDate = ({ style, date, query, variables = {} }) => {
                 className="is-size-2-tablet is-size-4 has-margin-bottom-20 sticky-header"
                 data-date={mDate.format("YYYY-MM-DD")}
               >
-                <Link href={`/fecha/${mDate.format("YYYY-MM-DD")}`}>
+                <Link
+                  href={`/fecha/[fecha]`}
+                  as={`/fecha/${mDate.format("YYYY-MM-DD")}`}
+                >
                   <a>
                     <span className="is-hidden-mobile">
                       <span className="is-capitalized">

@@ -13,7 +13,7 @@ import gql from "graphql-tag";
 
 import EventsByDate from "../../components/EventsByDate";
 import Seo from "../../components/Seo";
-import { today } from "../../lib/helpers";
+import { ID_REGEX, today } from "../../lib/helpers";
 
 const VENUE_EVENTS_QUERY = `
   query EventsForVenue($venue_at_record_id: String, $today: String) {
@@ -45,8 +45,6 @@ const VENUE_QUERY = gql`
   }
 `;
 
-const ID_REGEX = /.*-(\d+)$/;
-
 const LugarPage = props => {
   const router = useRouter();
   const { slug } = router.query;
@@ -66,9 +64,10 @@ const LugarPage = props => {
     notifyOnNetworkStatusChange: true
   });
   const { loading, error, data, fetchMore, networkStatus } = query;
+  let content;
 
   if (error) {
-    return (
+    content = (
       <section
         className="section events-by-date"
         style={{ paddingTop: "2.5rem" }}
@@ -76,9 +75,8 @@ const LugarPage = props => {
         Error
       </section>
     );
-  }
-  if (loading) {
-    return (
+  } else if (loading) {
+    content = (
       <section
         className="section events-by-date"
         style={{ paddingTop: "2.5rem" }}
@@ -86,72 +84,71 @@ const LugarPage = props => {
         <div className="loadingspinner"></div>
       </section>
     );
-  }
-
-  const { venue } = data;
-
-  if (!venue) {
-    return <Error statusCode="404" />;
-  }
-
-  return (
-    <App>
-      <Seo title={`Eventos en ${venue.nombre} (${venue.city.nombre})`} />
-      <section className="section" style={{ paddingBottom: 0 }}>
-        <div className="container ">
-          <div
-            className="columns has-margin-bottom-10 is-vcentered"
-            style={{ alignItems: "flex-end" }}
-          >
-            <div className="column">
-              <h3 className="subtitle is-size-5-mobile">Eventos en</h3>
-              <h2 className="title is-size-2-mobile is-size-2">
-                {venue.nombre}{" "}
-                {venue.instagramUsername ? (
-                  <a
-                    href={`https://instagram.com/${venue.instagramUsername}`}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    <span className="icon">
-                      <FontAwesomeIcon icon={faInstagram} size="sm" />
-                    </span>
-                  </a>
-                ) : (
-                  ""
-                )}{" "}
-                {venue.facebookUrl ? (
-                  <span className="icon">
+  } else if (!data.venue) {
+    content = <Error statusCode="404" />;
+  } else {
+    const { venue } = data;
+    content = (
+      <div>
+        <Seo title={`Eventos en ${venue.nombre} (${venue.city.nombre})`} />
+        <section className="section" style={{ paddingBottom: 0 }}>
+          <div className="container ">
+            <div
+              className="columns has-margin-bottom-10 is-vcentered"
+              style={{ alignItems: "flex-end" }}
+            >
+              <div className="column">
+                <h3 className="subtitle is-size-5-mobile">Eventos en</h3>
+                <h2 className="title is-size-2-mobile is-size-1">
+                  {venue.nombre}{" "}
+                  {venue.instagramUsername ? (
                     <a
-                      href={venue.facebookUrl}
+                      href={`https://instagram.com/${venue.instagramUsername}`}
                       rel="noopener noreferrer"
                       target="_blank"
-                      className="icon"
                     >
-                      <FontAwesomeIcon icon={faFacebookSquare} size="sm" />
+                      <span className="icon">
+                        <FontAwesomeIcon icon={faInstagram} size="sm" />
+                      </span>
                     </a>
-                  </span>
-                ) : (
-                  ""
-                )}
-              </h2>
-              <h3 className="subtitle is-size-4  is-size-5-mobile">
-                {venue.direccion ? `${venue.direccion} ∙` : null}{" "}
-                {venue.city && venue.city.nombre}
-              </h3>
+                  ) : (
+                    ""
+                  )}{" "}
+                  {venue.facebookUrl ? (
+                    <span className="icon">
+                      <a
+                        href={venue.facebookUrl}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        className="icon"
+                      >
+                        <FontAwesomeIcon icon={faFacebookSquare} size="sm" />
+                      </a>
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                </h2>
+                <h3 className="subtitle is-size-4  is-size-5-mobile">
+                  {venue.direccion ? `${venue.direccion} ∙` : null}{" "}
+                  {venue.city && venue.city.nombre}
+                </h3>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-      <EventsByDate
-        query={VENUE_EVENTS_QUERY}
-        variables={{
-          venue_at_record_id: venue.atRecordId,
-          today: today()
-        }}
-      />
-    </App>
-  );
+        </section>
+        <EventsByDate
+          query={VENUE_EVENTS_QUERY}
+          variables={{
+            venue_at_record_id: venue.atRecordId,
+            today: today()
+          }}
+        />
+      </div>
+    );
+  }
+
+  return <App>{content}</App>;
 };
 
 export default withApollo(LugarPage);
