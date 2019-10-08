@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
@@ -18,8 +18,12 @@ const PeriodSelector = ({ currentPeriod }) => {
           onClick={() => setActive(!isActive)}
         >
           <span>{currentPeriod.name}</span>
-          <span className="icon is-small">
-            <FontAwesomeIcon icon={faAngleDown} aria-hidden="true" />
+          <span className="icon is-size-7">
+            <FontAwesomeIcon
+              icon={faAngleDown}
+              aria-hidden="true"
+              color="grey"
+            />
           </span>
         </button>
       </div>

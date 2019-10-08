@@ -20,8 +20,7 @@ const EnviarEvento = () => {
                   className="loadingspinner"
                   style={{
                     position: "absolute",
-                    left: "calc(50% - (2.5em / 2))",
-                    borderTopColor: "darkgrey"
+                    left: "calc(50% - (2.5em / 2))"
                   }}
                 />
               )}

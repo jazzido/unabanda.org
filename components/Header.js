@@ -48,7 +48,10 @@ const Header = ({ isAdmin }) => {
                 type="search"
                 placeholder="Buscar eventos…"
               />
-              <span className="icon is-small is-right">
+              <span
+                className="icon is-size-7 is-right"
+                style={{ top: 4, right: 4 }}
+              >
                 <FontAwesomeIcon icon={faSearch} />
               </span>
             </p>

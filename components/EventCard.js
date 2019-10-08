@@ -92,6 +92,8 @@ const EventCard = ({ event }) => {
             z-index: 2;
             background-color: #444444 !important;
             display: flex !important;
+            justify-content: space-around;
+            align-items: flex-end;
           }
           .share-popup * {
             cursor: pointer;
@@ -122,7 +124,7 @@ const EventCard = ({ event }) => {
           <p className="is-size-6">{event.cuerpo}</p>
         </div>
         <div className="columns is-mobile">
-          <div className="column is-10">
+          <div className="column">
             <h3 className="title is-size-6">
               <Link href="/lugar/[slug]" as={`/lugar/${event.venue.slug}`}>
                 <a>{event.venue.nombre}</a>
@@ -142,7 +144,7 @@ const EventCard = ({ event }) => {
             </h4>
           </div>
           <a
-            className="column has-text-right has-text-black is-2"
+            className="column is-narrow has-text-right has-text-black"
             style={{
               alignSelf: "flex-end",
               cursor: "pointer",
@@ -150,8 +152,8 @@ const EventCard = ({ event }) => {
             }}
             onClick={() => setIsShareOpen(!isShareOpen)}
           >
-            <span className="icon">
-              <FontAwesomeIcon icon={faShareAlt} />
+            <span className="icon is-small">
+              <FontAwesomeIcon size="lg" icon={faShareAlt} />
             </span>
           </a>
 
@@ -161,17 +163,17 @@ const EventCard = ({ event }) => {
               visibility: isShareOpen ? "visible" : "hidden"
             }}
           >
-            <span className="icon is-medium has-text-white">
+            <span className="icon  has-text-white">
               <WhatsappShareButton url={eventAbsoluteUrl}>
                 <FontAwesomeIcon icon={faWhatsapp} size="lg" />
               </WhatsappShareButton>
             </span>
-            <span className="icon is-medium has-text-white">
+            <span className="icon  has-text-white">
               <FacebookShareButton url={eventAbsoluteUrl}>
                 <FontAwesomeIcon icon={faFacebook} size="lg" />
               </FacebookShareButton>
             </span>
-            <span className="icon is-medium has-text-white">
+            <span className="icon  has-text-white">
               <TwitterShareButton url={eventAbsoluteUrl}>
                 <FontAwesomeIcon icon={faTwitter} size="lg" />
               </TwitterShareButton>
