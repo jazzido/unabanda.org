@@ -9,10 +9,10 @@ import { PERIODS } from "../pages/[root]";
 const PeriodSelector = ({ currentPeriod }) => {
   const [isActive, setActive] = useState(false);
   return (
-    <div className={`dropdown is-size-3 ${isActive && "is-active"}`}>
+    <div className={`dropdown is-size-4 ${isActive && "is-active"}`}>
       <div className="dropdown-trigger">
         <button
-          className="button is-size-5"
+          className="button is-black is-size-5"
           aria-haspopup="true"
           aria-controls="dropdown-menu"
           onClick={() => setActive(!isActive)}
@@ -23,6 +23,7 @@ const PeriodSelector = ({ currentPeriod }) => {
               icon={faAngleDown}
               aria-hidden="true"
               color="grey"
+              style={{ flex: "1 0 auto" }}
             />
           </span>
         </button>

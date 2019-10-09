@@ -1,11 +1,40 @@
+import { useQuery } from "@apollo/react-hooks";
+import gql from "graphql-tag";
 import Link from "next/link";
+import moment from "moment-timezone";
+import "moment/locale/es";
 
-export default props => {
+import config from "../lib/config";
+
+const Footer = props => {
+  const doQuery = useQuery(
+    gql`
+      {
+        lastModified
+      }
+    `,
+    {
+      notifyOnNetworkStatusChange: true
+    }
+  );
+
+  const { loading, error, data, fetchMore, networkStatus } = doQuery;
+
+  const content =
+    loading || error ? (
+      <div className="loadingspinner" style={{ width: 15, height: 15 }} />
+    ) : (
+      moment(data.lastModified)
+        .tz(config.timeZone)
+        .locale("es")
+        .toString()
+    );
+
   return (
     <div className="footer">
       <div className="content has-text-centered">
         <p>
-          Última actualización: <strong>XXXXXXXX</strong>
+          Última actualización: <strong>{content}</strong>
         </p>
         <div className="columns">
           <div className="column is-2 is-offset-2" />
@@ -52,3 +81,5 @@ export default props => {
     </div>
   );
 };
+
+export default Footer;

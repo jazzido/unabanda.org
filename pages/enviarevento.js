@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { withApollo } from "../lib/apollo";
 import App from "../components/App";
 import Header from "../components/Header";
 
@@ -46,4 +47,4 @@ const EnviarEvento = () => {
   );
 };
 
-export default EnviarEvento;
+export default withApollo(EnviarEvento);

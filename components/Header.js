@@ -5,13 +5,11 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 import Logo from "./Logo.js";
 import Search from "./Search";
-
-const Header = ({ isAdmin }) => {
+const Header = () => {
   const [navBarActive, setNavBarActive] = useState(false);
-  const backgroundColor = isAdmin ? "danger" : "black";
   return (
     <nav
-      className={`navbar has-background-${backgroundColor} has-text-white is-fixed-top`}
+      className={"navbar is-black has-text-white is-fixed-top"}
       role="navigation"
       aria-label="main navigation"
     >
@@ -27,7 +25,10 @@ const Header = ({ isAdmin }) => {
           aria-label="menu"
           aria-expanded="false"
           data-target="navbarBasicExample"
-          onClick={() => setNavBarActive(!navBarActive)}
+          onClick={e => {
+            e.stopPropagation();
+            setNavBarActive(!navBarActive);
+          }}
           style={{ color: "#fafafa" }}
         >
           <span aria-hidden="true" />
@@ -40,8 +41,21 @@ const Header = ({ isAdmin }) => {
         id="navbarBasicExample"
         className={`navbar-menu ${navBarActive ? "is-active" : ""}`}
       >
+        <div className="navbar-start">
+          <div className="navbar-item has-dropdown is-hoverable">
+            <a className="navbar-link">More</a>
+
+            <div className="navbar-dropdown">
+              <a className="navbar-item">About</a>
+              <a className="navbar-item">Jobs</a>
+              <a className="navbar-item">Contact</a>
+              <hr className="navbar-divider" />
+              <a className="navbar-item">Report an issue</a>
+            </div>
+          </div>
+        </div>
         <div className="navbar-end">
-          <div className="navbar-item" style={{ position: "relative" }}>
+          {/* <div className="navbar-item" style={{ position: "relative" }}>
             <p className="control has-icons-right">
               <input
                 className="input"
@@ -55,10 +69,10 @@ const Header = ({ isAdmin }) => {
                 <FontAwesomeIcon icon={faSearch} />
               </span>
             </p>
-            {/* <Search
+            <Search
               style={{ position: "absolute", top: 52, right: 12, width: 300 }}
-            /> */}
-          </div>
+            /> 
+          </div> */}
 
           <div className="navbar-item">
             <div className="buttons">

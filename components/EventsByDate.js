@@ -1,7 +1,11 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { NetworkStatus } from "apollo-client";
-import _ from "lodash";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import groupBy from "lodash/groupBy";
+import sortBy from "lodash/sortBy";
+import keys from "lodash/keys";
 import gql from "graphql-tag";
 import moment from "moment-timezone";
 
@@ -10,8 +14,6 @@ import "moment/locale/es";
 import { theme } from "../lib/theme.js";
 import Link from "next/link";
 import EventCard from "./EventCard";
-import config from "../lib/config";
-import { today } from "../lib/helpers";
 
 export const queryFragments = {
   eventFields: gql`
@@ -38,22 +40,86 @@ export const queryFragments = {
 };
 
 function getEventsByDate(eventEdges) {
-  const byDate = _.groupBy(eventEdges, eventEdge => eventEdge.node.fecha);
-  const dates = _.sortBy(_.keys(byDate));
+  const byDate = groupBy(eventEdges, eventEdge => eventEdge.node.fecha);
+  const dates = sortBy(keys(byDate));
   return dates.reduce((dates, date) => {
     return [
       ...dates,
       {
         date: date,
-        events: _.sortBy(byDate[date].map(event => event.node), "hora")
+        events: sortBy(byDate[date].map(event => event.node), "hora")
       }
     ];
   }, []);
 }
 
-const EventsByDate = ({ style, date, query, variables = {} }) => {
-  const currentDate = today();
+const CardsContainer = ({ events }) => {
+  const scrollingContainer = useRef(null);
+  return (
+    <div
+      style={{
+        position: "relative",
+        overflowX: "auto"
+      }}
+    >
+      <a
+        className="button is-black left is-hidden-tablet"
+        style={{ opacity: 0.4, position: "absolute", top: "50%", zIndex: 10 }}
+        onClick={() => {
+          scrollingContainer.current.scrollBy(-240, 0);
+        }}
+      >
+        <span className="icon is-small has-text-white">
+          <FontAwesomeIcon icon={faArrowLeft} style={{ flex: "1 0 auto" }} />
+        </span>
+      </a>
+      <a
+        className="button is-black right is-hidden-tablet"
+        style={{
+          opacity: 0.4,
+          position: "absolute",
+          top: "50%",
+          right: 0,
+          zIndex: 10
+        }}
+        onClick={() => {
+          scrollingContainer.current.scrollBy(240, 0);
+        }}
+      >
+        <span className="icon is-small has-text-white">
+          <FontAwesomeIcon icon={faArrowRight} style={{ flex: "1 0 auto" }} />
+        </span>
+      </a>
+      <div
+        className="masonry-with-columns cards-container"
+        ref={scrollingContainer}
+        onScroll={e => console.log(e.target.scrollLeft)}
+      >
+        {events.map((event, i) => {
+          return (
+            <div key={i}>
+              <EventCard event={event} className="masonry-card" />
+            </div>
+          );
+        })}
+      </div>
+      <style jsx>
+        {`
+          .button {
+            position: absolute;
+            top: 50%;
+            z-index: 1;
+          }
+          .button.right {
+            right: 0;
+          }
+        `}
+      </style>
+    </div>
+  );
+};
 
+const EventsByDate = ({ style, query, variables = {} }) => {
   const doQuery = useQuery(
     gql`
       ${query}
@@ -66,69 +132,6 @@ const EventsByDate = ({ style, date, query, variables = {} }) => {
   );
 
   const { loading, error, data, fetchMore, networkStatus } = doQuery;
-
-  let stickyEvents;
-  const bumperRef = useRef(null);
-
-  const setUpSticky = async () => {
-    const { default: StickyEvents } = await import("sticky-events");
-    const bumper = bumperRef.current;
-    let currentlyStuck = null;
-
-    const onHeaderUnstuck = header => {
-      header.classList.remove("today", "tomorrow", "more", "is-stuck");
-      bumper.classList.remove("today", "tomorrow", "more", "is-stuck");
-    };
-
-    stickyEvents = new StickyEvents({
-      enabled: true,
-      stickySelector: "h2.sticky-header"
-    });
-
-    const { stickyElements, stickySelector } = stickyEvents;
-
-    stickyElements.forEach(sticky => {
-      const headerDate = moment(sticky.dataset.date).startOf("day");
-
-      sticky.addEventListener(StickyEvents.CHANGE, event => {
-        const { isSticky } = event.detail;
-        if (isSticky) {
-          if (currentlyStuck) {
-            onHeaderUnstuck(currentlyStuck);
-          }
-          currentlyStuck = sticky;
-          sticky.classList.add("is-stuck");
-          switch (headerDate.diff(currentDate, "days")) {
-            case 0:
-              sticky.classList.add("today");
-              bumper.classList.add("today");
-              break;
-            case 1:
-              sticky.classList.add("tomorrow");
-              bumper.classList.add("tomorrow");
-              break;
-            default:
-              sticky.classList.add("more");
-              bumper.classList.add("more");
-              break;
-          }
-        } else if (currentlyStuck === sticky) {
-          onHeaderUnstuck(sticky);
-          currentlyStuck = null;
-        }
-      });
-    });
-  };
-
-  useEffect(() => {
-    setUpSticky();
-    return () => {
-      // clean up sticky events
-      if (stickyEvents) {
-        stickyEvents.disableEvents();
-      }
-    };
-  }, [data]);
 
   const loadingMoreEvents = networkStatus === NetworkStatus.fetchMore;
 
@@ -153,19 +156,25 @@ const EventsByDate = ({ style, date, query, variables = {} }) => {
       className="section events-by-date"
       style={{ paddingTop: "2.5rem" }}
     >
-      <div className={`sticky-header-bumper is-size-3`} ref={bumperRef} />
       <div className="container">
         {getEventsByDate(allEvents).map(({ date: dateString, events }) => {
           const mDate = moment(dateString).locale("es");
 
           return (
-            <div className="has-margin-bottom-20" key={dateString}>
+            <div
+              className="has-margin-bottom-20"
+              key={dateString}
+              style={{
+                scrollSnapAlign: "start",
+                scrollSnapStop: "normal"
+              }}
+            >
               <h2
-                className="is-size-2-tablet is-size-4 has-margin-bottom-20 sticky-header"
+                className="is-size-2-tablet is-size-4 has-margin-bottom-20-tablet sticky-header"
                 data-date={mDate.format("YYYY-MM-DD")}
               >
                 <Link
-                  href={`/fecha/[fecha]`}
+                  href={"/fecha/[fecha]"}
                   as={`/fecha/${mDate.format("YYYY-MM-DD")}`}
                 >
                   <a>
@@ -181,15 +190,7 @@ const EventsByDate = ({ style, date, query, variables = {} }) => {
                   </a>
                 </Link>
               </h2>
-              <div className="masonry-with-columns">
-                {events.map((event, i) => {
-                  return (
-                    <div key={i}>
-                      <EventCard event={event} className="masonry-card" />
-                    </div>
-                  );
-                })}
-              </div>
+              <CardsContainer events={events} />
             </div>
           );
         })}
@@ -201,16 +202,6 @@ const EventsByDate = ({ style, date, query, variables = {} }) => {
           .events-by-date {
             padding-top: 2.5rem;
             min-height: 100vh;
-          }
-
-          .masonry-with-columns {
-            columns: 5 200px;
-            column-gap: 1rem;
-          }
-          .masonry-with-columns > div {
-            margin: 0 1rem 1rem 0;
-            display: inline-block;
-            width: 100%;
           }
 
           .sticky-header-bumper {

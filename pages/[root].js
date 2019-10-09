@@ -80,7 +80,7 @@ export const PERIODS = [
     }
   },
   {
-    name: "Este fin de semana",
+    name: "Este finde",
     path: "finde",
     query: FECHA_BETWEEN_QUERY,
     variables: {
@@ -117,7 +117,7 @@ export const PERIODS = [
     }
   },
   {
-    name: "Todos",
+    name: "Todos los eventos",
     path: "todos",
     query: FECHA_GTE_QUERY,
     variables: {
@@ -142,8 +142,17 @@ export default withApollo(props => {
 
   return (
     <App>
-      <Seo title="Música en vivo en Bahía Blanca y zona" />
-      <div className="section" style={{ paddingTop: 0, paddingBottom: 0 }}>
+      <Seo title={currentPeriod.name} />
+      <div
+        className="section"
+        style={{
+          paddingTop: "1rem",
+          paddingBottom: 0,
+          scrollSnapAlign: "start",
+          scrollSnapStop: "normal",
+          scrollPaddingTop: "16px"
+        }}
+      >
         <div className="container">
           <PeriodSelector currentPeriod={currentPeriod} />
         </div>

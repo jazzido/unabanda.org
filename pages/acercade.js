@@ -1,11 +1,9 @@
-import { useState } from "react";
+import { withApollo } from "../lib/apollo";
+
 import App from "../components/App";
 import Header from "../components/Header";
 import Logo from "../components/Logo";
-// import NextSeo from "next-seo";
 import Head from "next/head";
-
-import config from "../lib/config";
 
 const AcercaDe = () => {
   return (
@@ -36,4 +34,4 @@ const AcercaDe = () => {
   );
 };
 
-export default AcercaDe;
+export default withApollo(AcercaDe);

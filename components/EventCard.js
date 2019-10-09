@@ -29,6 +29,7 @@ const LittleCalendar = ({ fecha, className, ...props }) => {
   const mFecha = moment(fecha)
     .tz(config.timeZone)
     .locale("es");
+
   return (
     <div
       className={`little-calendar is-paddingless has-text-centered ${className}`}
@@ -77,29 +78,13 @@ const EventCard = ({ event }) => {
   const eventUrl = `/evento/${event.slug}`;
   const eventAbsoluteUrl = `${config.siteUrl}${eventUrl}`;
 
+  if (!event.venue) {
+    console.log("xxx", event);
+  }
+
   const [isShareOpen, setIsShareOpen] = useState(false);
   return (
     <div className="card">
-      <style jsx>
-        {`
-          .share-popup {
-            width: 110px;
-            position: absolute;
-            right: 30px;
-            bottom: 5px;
-            height: 2.5rem;
-            padding: 5px !important;
-            z-index: 2;
-            background-color: #444444 !important;
-            display: flex !important;
-            justify-content: space-around;
-            align-items: flex-end;
-          }
-          .share-popup * {
-            cursor: pointer;
-          }
-        `}
-      </style>
       {/* {eventImage} */}
       <div
         className="card-content"
@@ -120,10 +105,10 @@ const EventCard = ({ event }) => {
           </h2>
         </div>
 
-        <div className="content">
+        <div className="content event-body">
           <p className="is-size-6">{event.cuerpo}</p>
         </div>
-        <div className="columns is-mobile">
+        <div className="columns is-mobile event-venue">
           <div className="column">
             <h3 className="title is-size-6">
               <Link href="/lugar/[slug]" as={`/lugar/${event.venue.slug}`}>
@@ -153,7 +138,11 @@ const EventCard = ({ event }) => {
             onClick={() => setIsShareOpen(!isShareOpen)}
           >
             <span className="icon is-small">
-              <FontAwesomeIcon size="lg" icon={faShareAlt} />
+              <FontAwesomeIcon
+                icon={faShareAlt}
+                size="sm"
+                style={{ flex: "1 0 auto" }}
+              />
             </span>
           </a>
 
@@ -163,18 +152,27 @@ const EventCard = ({ event }) => {
               visibility: isShareOpen ? "visible" : "hidden"
             }}
           >
-            <span className="icon  has-text-white">
-              <WhatsappShareButton url={eventAbsoluteUrl}>
+            <span className="icon has-text-white">
+              <WhatsappShareButton
+                url={eventAbsoluteUrl}
+                style={{ flex: "1 0 auto" }}
+              >
                 <FontAwesomeIcon icon={faWhatsapp} size="lg" />
               </WhatsappShareButton>
             </span>
             <span className="icon  has-text-white">
-              <FacebookShareButton url={eventAbsoluteUrl}>
+              <FacebookShareButton
+                url={eventAbsoluteUrl}
+                style={{ flex: "1 0 auto" }}
+              >
                 <FontAwesomeIcon icon={faFacebook} size="lg" />
               </FacebookShareButton>
             </span>
             <span className="icon  has-text-white">
-              <TwitterShareButton url={eventAbsoluteUrl}>
+              <TwitterShareButton
+                url={eventAbsoluteUrl}
+                style={{ flex: "1 0 auto" }}
+              >
                 <FontAwesomeIcon icon={faTwitter} size="lg" />
               </TwitterShareButton>
             </span>
@@ -192,6 +190,30 @@ const EventCard = ({ event }) => {
           {event.hora}
         </div>
       </footer>
+      <style jsx>
+        {`
+          .share-popup {
+            width: 110px;
+            position: absolute;
+            right: 30px;
+            bottom: 5px;
+            height: 2.5rem;
+            padding: 5px !important;
+            z-index: 2;
+            background-color: #444444 !important;
+            display: flex !important;
+            justify-content: space-around;
+            align-items: flex-end;
+          }
+          .share-popup * {
+            cursor: pointer;
+          }
+          .icon .fas {
+            width: 16px;
+            height: 16px;
+          }
+        `}
+      </style>
     </div>
   );
 };

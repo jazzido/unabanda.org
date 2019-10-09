@@ -1,10 +1,7 @@
 import React from "react";
 import App from "next/app";
 
-// import "bulma/bulma.sass";
-// import "bulma-helpers/bulma-helpers.sass";
-
-import "../lib/styles.sass";
+import "../lib/styles.scss";
 
 class MyApp extends App {
   // Only uncomment this method if you have blocking data requirements for
