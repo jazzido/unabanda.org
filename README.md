@@ -4,9 +4,9 @@
 
 # unabanda.org
 
-unabanda.org es una agenda de eventos musicales, actualmente enfocada en Bahía Blanca y zona (Argentina)
+[unabanda.org](https://unabanda.org) es una agenda de eventos musicales, actualmente enfocada en Bahía Blanca y zona (Argentina)
 
-# Para develpers
+# Para developers
 
 Con `yarn && yarn dev`, deberías salir andando. Son bienvenidos los pull requests y —sobre todo— mejoras en el diseño e interfaz de usuario.
 
