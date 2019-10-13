@@ -1,46 +1,61 @@
 //const withCSS = require("@zeit/next-css");
+
+if (process.env.NODE_ENV === "development") {
+  require("dotenv").config();
+}
+const webpack = require("webpack");
 const withSass = require("@zeit/next-sass");
 const withOffline = require("next-offline");
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true"
+});
 
-// HAY UN BUG con la última versión de css-loader, esto lo arregla
-function HACK_removeMinimizeOptionFromCssLoaders(config) {
-  console.warn(
-    "HACK: Removing `minimize` option from `css-loader` entries in Webpack config"
-  );
-  config.module.rules.forEach(rule => {
-    if (Array.isArray(rule.use)) {
-      rule.use.forEach(u => {
-        if (u.loader === "css-loader" && u.options) {
-          delete u.options.minimize;
-        }
-      });
-    }
-  });
-}
+const siteConfig = require("./lib/config.js");
 
-module.exports = withOffline(
-  withSass({
-    webpack(config) {
-      HACK_removeMinimizeOptionFromCssLoaders(config);
-      return config;
-    }
-  })
+const config = withBundleAnalyzer(
+  withSass(
+    withOffline({
+      target: "serverless",
+      generateInDevMode: true,
+      generateSw: true,
+      workboxOpts: {
+        swDest: "static/service-worker.js",
+        runtimeCaching: [
+          {
+            urlPattern: /^https?.*/,
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "https-calls",
+              networkTimeoutSeconds: 15,
+              expiration: {
+                maxEntries: 150,
+                maxAgeSeconds: 30 * 24 * 60 * 60 // 1 month
+              },
+              cacheableResponse: {
+                statuses: [0, 200]
+              }
+            }
+          }
+        ]
+      },
+      env: {
+        FIREBASE_DATABASE_URL: siteConfig.firebase.databaseURL,
+        FIREBASE_COLLECTION: siteConfig.firebase.subscribersCollection,
+        FIREBASE_MESSAGING_TOPIC: siteConfig.firebase.messagingTopic
+      },
+      webpack(config) {
+        return {
+          ...config,
+          plugins: [
+            ...config.plugins,
+            new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+          ]
+        };
+      }
+    })
+  )
 );
 
-// Este archivo ./node_modules/postcss-preset-env/index.mjs
-// quiere importar algo que no puede, esto se supone que lo arregla
-// function HACK_MJS_ylaputaquetepario(config) {
-//   config.module.rules.push({
-//     test: /\.mjs$/,
-//     include: /node_modules/,
-//     type: "javascript/auto"
-//   });
-//   console.log(config.module.rules);
-// }
+console.log(config);
 
-// module.exports = {
-//   webpack(config) {
-//     HACK_MJS_ylaputaquetepario(config);
-//     return config;
-//   }
-// };
+module.exports = config;

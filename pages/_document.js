@@ -3,16 +3,12 @@
 
 // ./pages/_document.js
 import Document, { Html, Head, Main, NextScript } from "next/document";
-import moment from "moment-timezone";
 import config from "../lib/config";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx);
-    const today = moment()
-      .tz(config.timeZone)
-      .format("YYYY-MM-DD");
-    return { __unabandaToday: today, ...initialProps };
+    return { ...initialProps };
   }
 
   render() {
@@ -47,13 +43,13 @@ class MyDocument extends Document {
               __html: `
   // Your web app's Firebase configuration
   var firebaseConfig = {
-    apiKey: "AIzaSyBWkPpAtaqQ3ZATPdb0tLyjDqmhKdE2Kjw",
-    authDomain: "unabanda-645bd.firebaseapp.com",
-    databaseURL: "https://unabanda-645bd.firebaseio.com",
-    projectId: "unabanda-645bd",
+    apiKey: ${config.firebase.apiKey},
+    authDomain: ${config.firebase.authDomain},
+    databaseURL: ${config.firebase.databaseURL},
+    projectId: ${config.firebase.projectId},
     storageBucket: "",
-    messagingSenderId: "926556883368",
-    appId: "1:926556883368:web:82d705585a02c7ffd8f59d"
+    messagingSenderId: ${config.firebase.messagingSenderId},
+    appId: ${config.firebase.appId}"
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);`
