@@ -2,7 +2,7 @@
   "name": "unabanda",
   "short_name": "unabanda",
   "description": "La agenda más completa de música en vivo de Bahía Blanca y zona",
-  "start_url": "https://unabanda.org",
+  "start_url": "/",
   "background_color": "#000000",
   "theme_color": "#000000",
   "display": "minimal-ui",

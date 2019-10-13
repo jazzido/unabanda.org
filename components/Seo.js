@@ -7,7 +7,9 @@ import config from "../lib/config";
 function mergeSeo(seoProps) {
   const m = merge({ ...config.defaultSeo }, seoProps);
   if (seoProps.title) {
-    m.openGraph.title = seoProps.title;
+    m.openGraph.title = m.titleTemplate
+      ? m.titleTemplate.replace(/%s/g, () => seoProps.title)
+      : seoProps.title;
   }
   return m;
 }

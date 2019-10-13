@@ -1,10 +1,128 @@
 import Link from "next/link";
 import { useState } from "react";
+import moment from "moment-timezone";
+import keyBy from "lodash/keyBy";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
-import { PERIODS } from "../pages/[root]";
+import config from "../lib/config";
+
+const FECHA_EQ_QUERY = `
+  query EventsForDate($date: String) {
+    allEvents(sort: FECHA_ASC, filters: { fecha: $date }) {
+      edges {
+        node {
+          ...EventFields
+        }
+      }
+    }
+  }
+`;
+
+const FECHA_GTE_QUERY = `
+  query EventsForDateAndAfter($date: String) {
+    allEvents(sort: FECHA_ASC, filters: { fechaGte: $date }) {
+      edges {
+        node {
+          ...EventFields
+        }
+      }
+    }
+  }
+`;
+
+const FECHA_BETWEEN_QUERY = `
+  query EventsBetweenDates($fromDate: String, $toDate: String) {
+    allEvents(
+      sort: FECHA_ASC
+      filters: { and: { fechaGte: $fromDate, fechaLte: $toDate } }
+    ) {
+      edges {
+        node {
+          ...EventFields
+        }
+      }
+    }
+  }
+`;
+
+const today = () => moment().tz(config.timeZone);
+
+export const PERIODS = [
+  {
+    name: "Esta semana",
+    path: "",
+    query: FECHA_BETWEEN_QUERY,
+    variables: {
+      fromDate: today(),
+      toDate: today().endOf("isoWeek")
+    }
+  },
+  {
+    name: "Hoy",
+    path: "hoy",
+    query: FECHA_EQ_QUERY,
+    variables: {
+      date: today()
+    }
+  },
+  {
+    name: "Mañana",
+    path: "mañana",
+    query: FECHA_EQ_QUERY,
+    variables: {
+      date: today().add(1, "day")
+    }
+  },
+  {
+    name: "Este finde",
+    path: "finde",
+    query: FECHA_BETWEEN_QUERY,
+    variables: {
+      fromDate: today()
+        .endOf("isoWeek")
+        .subtract(2, "days"),
+      toDate: today().endOf("isoWeek")
+    }
+  },
+  {
+    name: "Semana que viene",
+    path: "semanaqueviene",
+    query: FECHA_BETWEEN_QUERY,
+    variables: {
+      fromDate: today()
+        .add(1, "weeks")
+        .startOf("isoWeek"),
+      toDate: today()
+        .add(1, "weeks")
+        .endOf("isoWeek")
+    }
+  },
+  {
+    name: "Mes que viene",
+    path: "mesqueviene",
+    query: FECHA_BETWEEN_QUERY,
+    variables: {
+      fromDate: today()
+        .add(1, "months")
+        .startOf("month"),
+      toDate: today()
+        .add(1, "month")
+        .endOf("month")
+    }
+  },
+  {
+    name: "Todos los eventos",
+    path: "todos",
+    query: FECHA_GTE_QUERY,
+    variables: {
+      date: today()
+    }
+  }
+];
+
+export const periodsByPath = keyBy(PERIODS, "path");
 
 const PeriodSelector = ({ currentPeriod }) => {
   const [isActive, setActive] = useState(false);
@@ -33,8 +151,8 @@ const PeriodSelector = ({ currentPeriod }) => {
           {PERIODS.map(({ name, path }) => {
             return (
               <Link
-                href={path === "" ? "/" : "/[root]"}
-                as={`/${path}`}
+                href={path === "" ? "/" : "/eventos/[period]"}
+                as={path === "" ? "/" : `/eventos/${path}`}
                 key={path}
               >
                 <a

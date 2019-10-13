@@ -8,7 +8,10 @@ const EnviarEvento = () => {
   return (
     <App>
       <Header />
-      <div className="container" style={{ height: "1600px" }}>
+      <div
+        className="container has-vertical-scroll-stop"
+        style={{ height: "1600px" }}
+      >
         <section className="section" style={{ height: "100%" }}>
           <div className="columns" style={{ height: "100%" }}>
             <div
@@ -35,7 +38,6 @@ const EnviarEvento = () => {
                 onLoad={() => setIsLoading(false)}
                 style={{
                   background: "transparent",
-                  // border: "1px solid #ccc",
                   height: "100%"
                 }}
               />

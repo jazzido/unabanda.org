@@ -1,0 +1,37 @@
+{
+  "version": 2,
+  "env": {
+    "FIREBASE_PROJECT_ID": "@firebase_project_id",
+    "FIREBASE_PRIVATE_KEY_ID": "@firebase_private_key_id",
+    "FIREBASE_PRIVATE_KEY": "@firebase_private_key",
+    "FIREBASE_CLIENT_EMAIL": "@firebase_client_email",
+    "FIREBASE_CLIENT_ID": "@firebase_client_id",
+    "FIREBASE_CLIENT_X509_CERT_URL": "@firebase_client_x509_cert_url"
+  },
+  "routes": [
+    {
+      "src": "^/service-worker.js$",
+      "dest": "/_next/static/service-worker.js",
+      "headers": {
+        "cache-control": "public, max-age=0, immutable",
+        "Service-Worker-Allowed": "/"
+      }
+    },
+    {
+      "src": "^/firebase-messaging-sw.js$",
+      "dest": "/_next/static/firebase-messaging-sw.js",
+      "headers": {
+        "cache-control": "public, max-age=0, immutable",
+        "Service-Worker-Allowed": "/"
+      }
+    },
+    {
+      "src": "^/manifest.json$",
+      "dest": "/_next/static/manifest.json",
+      "headers": {
+        "cache-control": "public, max-age=0, immutable",
+        "Service-Worker-Allowed": "/"
+      }
+    }
+  ]
+}

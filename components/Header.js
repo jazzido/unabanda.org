@@ -41,19 +41,6 @@ const Header = () => {
         id="navbarBasicExample"
         className={`navbar-menu ${navBarActive ? "is-active" : ""}`}
       >
-        <div className="navbar-start">
-          <div className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link">More</a>
-
-            <div className="navbar-dropdown">
-              <a className="navbar-item">About</a>
-              <a className="navbar-item">Jobs</a>
-              <a className="navbar-item">Contact</a>
-              <hr className="navbar-divider" />
-              <a className="navbar-item">Report an issue</a>
-            </div>
-          </div>
-        </div>
         <div className="navbar-end">
           {/* <div className="navbar-item" style={{ position: "relative" }}>
             <p className="control has-icons-right">
@@ -73,7 +60,6 @@ const Header = () => {
               style={{ position: "absolute", top: 52, right: 12, width: 300 }}
             /> 
           </div> */}
-
           <div className="navbar-item">
             <div className="buttons">
               <Link href="/acercade">

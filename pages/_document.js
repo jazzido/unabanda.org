@@ -35,7 +35,6 @@ class MyDocument extends Document {
             `
             }}
           ></script>
-          <script src="https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver" />
           <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-app.js" />
           <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-messaging.js" />
         </Head>
@@ -60,13 +59,13 @@ class MyDocument extends Document {
   firebase.initializeApp(firebaseConfig);`
             }}
           />
-          {/* <script
+          <script
             type="text/javascript"
             dangerouslySetInnerHTML={{
               __html: `
         if ("serviceWorker" in navigator) {
           navigator.serviceWorker
-            .register("./firebase-messaging-sw.js")
+            .register("/firebase-messaging-sw.js")
             .then(function(registration) {
               console.log("Registration successful, scope is:", registration.scope);
             })
@@ -76,7 +75,7 @@ class MyDocument extends Document {
         }
         `
             }}
-          /> */}
+          />
         </body>
       </Html>
     );

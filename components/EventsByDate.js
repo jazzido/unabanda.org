@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { NetworkStatus } from "apollo-client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,8 +8,6 @@ import sortBy from "lodash/sortBy";
 import keys from "lodash/keys";
 import gql from "graphql-tag";
 import moment from "moment-timezone";
-
-import "moment/locale/es";
 
 import { theme } from "../lib/theme.js";
 import Link from "next/link";
@@ -55,8 +53,51 @@ function getEventsByDate(eventEdges) {
 
 const CardsContainer = ({ events }) => {
   const scrollingContainer = useRef(null);
+  const cardForMeasuring = useRef(null);
+  const [showRight, setShowRight] = useState(events.length > 1);
+  const [showLeft, setShowLeft] = useState(false);
+  const [cardWidth, setCardWidth] = useState(0);
+  let isScrolling;
+
+  const measureFirstCard = () => {
+    setCardWidth(cardForMeasuring.current.offsetWidth);
+  };
+
+  useEffect(() => {
+    const container = scrollingContainer.current;
+    measureFirstCard();
+    const onScroll = () => {
+      // Clear our timeout throughout the scroll
+      window.clearTimeout(isScrolling);
+      isScrolling = setTimeout(() => {
+        // Run the callback
+        if (container.scrollLeft === 0) {
+          setShowLeft(false);
+        } else {
+          setShowLeft(true);
+        }
+
+        const scrollEnded =
+          container.scrollWidth - container.scrollLeft ===
+          container.clientWidth;
+        if (scrollEnded) {
+          setShowRight(false);
+        } else {
+          setShowRight(true);
+        }
+      }, 66);
+    };
+    window.addEventListener("resize", measureFirstCard);
+    container.addEventListener("scroll", onScroll);
+
+    return () => {
+      window.removeEventListener("resize", measureFirstCard);
+      container.removeEventListener("scroll", onScroll);
+    };
+  }, []);
   return (
     <div
+      className="has-margin-top-10-mobile"
       style={{
         position: "relative",
         overflowX: "auto"
@@ -64,10 +105,14 @@ const CardsContainer = ({ events }) => {
     >
       <a
         className="button is-black left is-hidden-tablet"
-        style={{ opacity: 0.4, position: "absolute", top: "50%", zIndex: 10 }}
-        onClick={() => {
-          scrollingContainer.current.scrollBy(-240, 0);
+        style={{
+          opacity: 0.4,
+          position: "absolute",
+          top: "50%",
+          zIndex: 10,
+          visibility: showLeft ? "visible" : "hidden"
         }}
+        onClick={() => (scrollingContainer.current.scrollLeft -= cardWidth)}
       >
         <span className="icon is-small has-text-white">
           <FontAwesomeIcon icon={faArrowLeft} style={{ flex: "1 0 auto" }} />
@@ -80,11 +125,10 @@ const CardsContainer = ({ events }) => {
           position: "absolute",
           top: "50%",
           right: 0,
-          zIndex: 10
+          zIndex: 10,
+          visibility: showRight ? "visible" : "hidden"
         }}
-        onClick={() => {
-          scrollingContainer.current.scrollBy(240, 0);
-        }}
+        onClick={() => (scrollingContainer.current.scrollLeft += cardWidth)}
       >
         <span className="icon is-small has-text-white">
           <FontAwesomeIcon icon={faArrowRight} style={{ flex: "1 0 auto" }} />
@@ -93,11 +137,10 @@ const CardsContainer = ({ events }) => {
       <div
         className="masonry-with-columns cards-container"
         ref={scrollingContainer}
-        onScroll={e => console.log(e.target.scrollLeft)}
       >
         {events.map((event, i) => {
           return (
-            <div key={i}>
+            <div key={i} {...(i === 0 ? { ref: cardForMeasuring } : undefined)}>
               <EventCard event={event} className="masonry-card" />
             </div>
           );
@@ -152,40 +195,33 @@ const EventsByDate = ({ style, query, variables = {} }) => {
   const { edges: allEvents } = data.allEvents;
 
   return (
-    <section
-      className="section events-by-date"
-      style={{ paddingTop: "2.5rem" }}
-    >
+    <section className="section events-by-date">
       <div className="container">
         {getEventsByDate(allEvents).map(({ date: dateString, events }) => {
           const mDate = moment(dateString).locale("es");
 
           return (
             <div
-              className="has-margin-bottom-20"
+              className="has-margin-bottom-20 has-vertical-scroll-stop"
               key={dateString}
-              style={{
-                scrollSnapAlign: "start",
-                scrollSnapStop: "normal"
-              }}
             >
               <h2
-                className="is-size-2-tablet is-size-4 has-margin-bottom-20-tablet sticky-header"
+                className="is-size-2-tablet is-size-4 has-margin-bottom-20-tablet"
                 data-date={mDate.format("YYYY-MM-DD")}
               >
                 <Link
                   href={"/fecha/[fecha]"}
                   as={`/fecha/${mDate.format("YYYY-MM-DD")}`}
                 >
-                  <a>
+                  <a className="has-text-black">
                     <span className="is-hidden-mobile">
                       <span className="is-capitalized">
                         {mDate.format("dddd")}
                       </span>{" "}
                       {mDate.format("D [de] MMMM [de] YYYY")}
                     </span>
-                    <span className="is-hidden-tablet is-capitalized">
-                      {mDate.format("dddd D/M/YYYY ")}
+                    <span className="is-hidden-tablet is-capitalized ">
+                      {mDate.format("dddd D/M/YYYY")}
                     </span>
                   </a>
                 </Link>
@@ -201,26 +237,7 @@ const EventsByDate = ({ style, query, variables = {} }) => {
         {`
           .events-by-date {
             padding-top: 2.5rem;
-            min-height: 100vh;
-          }
-
-          .sticky-header-bumper {
-            background-color: transparent;
-            // transition: background-color 0.2s ease;
-            position: fixed;
-            top: 52px;
-            height: 52px;
-            left: 0;
-            width: 100%;
-            pointer-events: none;
-            z-index: 5;
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
-          }
-
-          .sticky-header-bumper a {
-            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-            color: white;
+            // min-height: 100vh;
           }
 
           .today {
@@ -231,31 +248,6 @@ const EventsByDate = ({ style, query, variables = {} }) => {
           }
           .more {
             background-color: ${theme.colorDespues};
-          }
-
-          .sticky-header {
-            // position: sticky;
-            // position: -webkit-sticky;
-            top: 52px;
-            height: 52px;
-            z-index: 19;
-            background-color: transparent;
-
-            transition: background-color 0.2s ease;
-          }
-
-          .sticky-header.is-stuck {
-            top: 47px;
-          }
-
-          .sticky-header.is-stuck a {
-            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-            color: white;
-          }
-
-          .sticky-header a {
-            transition: color 0.1s ease;
-            color: black;
           }
         `}
       </style>

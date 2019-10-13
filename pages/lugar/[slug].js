@@ -91,7 +91,10 @@ const LugarPage = props => {
     content = (
       <div>
         <Seo title={`Eventos en ${venue.nombre} (${venue.city.nombre})`} />
-        <section className="section" style={{ paddingBottom: 0 }}>
+        <section
+          className="section has-vertical-scroll-stop"
+          style={{ paddingBottom: 0 }}
+        >
           <div className="container ">
             <div
               className="columns has-margin-bottom-10 is-vcentered"

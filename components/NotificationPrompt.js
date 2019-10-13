@@ -21,7 +21,7 @@ const NotificationPrompt = () => {
 
   return (
     <div
-      className="notification is-info is-size-5"
+      className="notification is-info is-size-5 has-vertical-scroll-stop"
       style={{ borderRadius: 0, marginBottom: 0 }}
     >
       <button
@@ -47,11 +47,8 @@ const NotificationPrompt = () => {
           className="button is-link"
           style={{ backgroundColor: "transparent" }}
           onClick={() => {
-            //this.setState({ renderNotificationPrompt: false });
-            // window.localStorage.setItem(
-            //   "renderNotificationPrompt",
-            //   "false"
-            // );
+            setRenderNotificationPrompt(false);
+            window.localStorage.setItem("renderNotificationPrompt", "false");
           }}
         >
           No quiero.

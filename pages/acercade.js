@@ -12,7 +12,7 @@ const AcercaDe = () => {
         <title>Acerca de unabanda.org</title>
       </Head>
       <Header />
-      <section className="section">
+      <section className="section has-vertical-scroll-stop">
         <div className="container box">
           <h1 className="title">
             Acerca de <Logo fillColor="black" width="120px" />

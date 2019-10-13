@@ -2,7 +2,6 @@ import App from "../../components/App";
 import { withApollo } from "../../lib/apollo";
 import { useRouter } from "next/router";
 import moment from "moment-timezone";
-import "moment/locale/es";
 
 import EventsByDate from "../../components/EventsByDate";
 import Seo from "../../components/Seo";
@@ -25,7 +24,7 @@ const FechaPage = props => {
   const { fecha } = router.query;
   // TODO validar fecha con regex, etc
 
-  const mDate = moment(fecha);
+  const mDate = moment(fecha).locale("es");
 
   return (
     <App>

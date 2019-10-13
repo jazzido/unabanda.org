@@ -1,15 +1,22 @@
-import App from "../components/App";
+import App from "../../components/App";
 import { useRouter } from "next/router";
-import { withApollo } from "../lib/apollo";
+import { withApollo } from "../../lib/apollo";
+import Error from "next/error";
 import mapValues from "lodash/mapValues";
 
-import EventsByDate from "../components/EventsByDate";
-import Seo from "../components/Seo";
-import PeriodSelector, { periodsByPath } from "../components/PeriodSelector";
-import LogoVorterix from "../components/LogoVorterix";
+import EventsByDate from "../../components/EventsByDate";
+import Seo from "../../components/Seo";
+import PeriodSelector, { periodsByPath } from "../../components/PeriodSelector";
+import LogoVorterix from "../../components/LogoVorterix";
 
-const IndexPage = props => {
-  const currentPeriod = periodsByPath[""];
+const PeriodPage = props => {
+  const router = useRouter();
+  let { period } = router.query;
+
+  const currentPeriod = periodsByPath[period];
+  if (!currentPeriod) {
+    return <Error statusCode="404" />;
+  }
 
   return (
     <App>
@@ -43,5 +50,4 @@ const IndexPage = props => {
     </App>
   );
 };
-
-export default withApollo(IndexPage);
+export default withApollo(PeriodPage);

@@ -27,11 +27,11 @@ const Footer = props => {
       moment(data.lastModified)
         .tz(config.timeZone)
         .locale("es")
-        .toString()
+        .format("dddd D [de] MMMM [de] YYYY [a las] HH:MM")
     );
 
   return (
-    <div className="footer">
+    <div className="footer has-vertical-scroll-stop">
       <div className="content has-text-centered">
         <p>
           Última actualización: <strong>{content}</strong>

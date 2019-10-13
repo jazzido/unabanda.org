@@ -3,6 +3,8 @@ import Footer from "./Footer";
 import Head from "next/head";
 import { withRouter } from "next/router";
 
+import "moment/locale/es";
+
 import NotificationPrompt from "./NotificationPrompt";
 
 const App = ({ children }) => (
@@ -13,7 +15,7 @@ const App = ({ children }) => (
         content="initial-scale=1.0, width=device-width"
         key="viewport"
       />
-      <link rel="manifest" href="/static/manifest.json" />
+      <link rel="manifest" href="/manifest.json" />
       <link rel="shortcut icon" href="/static/icons/icon-48x48.png" />
       <link
         rel="apple-touch-icon"

@@ -4,11 +4,10 @@ import { useRouter } from "next/router";
 import { useQuery } from "@apollo/react-hooks";
 import Error from "next/error";
 import gql from "graphql-tag";
+import moment from "moment-timezone";
 
-//import moment from "moment-timezone";
 import "moment/locale/es";
 
-//import EventsByDate from "../../components/EventsByDate";
 import Seo from "../../components/Seo";
 import EventCard from "../../components/EventCard";
 import config from "../../lib/config";
@@ -60,8 +59,28 @@ const EventPage = props => {
     content = <Error statusCode="404" />;
   } else {
     const { event } = data;
+    const mDate = moment(event.fecha).locale("es");
+
+    const title = `${mDate.format("DD/MM")}: ${event.nombre}${(event.venue
+      ? " en " + event.venue.nombre
+      : "") + (event.venue.city ? " (" + event.venue.city.nombre + ")" : "")}`;
     content = (
       <div className="container">
+        <Seo
+          title={title}
+          openGraph={{
+            images: [
+              {
+                url: `${config.siteUrl}/static/calendars/${mDate.format(
+                  "DD-MM"
+                )}.png`,
+                width: 256,
+                height: 256,
+                alt: mDate.format("D [de] MMMM [de] YYYY")
+              }
+            ]
+          }}
+        />
         <section className="section">
           <div className="columns">
             <div className="column is-half-tablet is-offset-one-quarter-tablet">

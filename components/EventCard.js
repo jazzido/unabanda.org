@@ -78,18 +78,13 @@ const EventCard = ({ event }) => {
   const eventUrl = `/evento/${event.slug}`;
   const eventAbsoluteUrl = `${config.siteUrl}${eventUrl}`;
 
-  if (!event.venue) {
-    console.log("xxx", event);
-  }
-
   const [isShareOpen, setIsShareOpen] = useState(false);
   return (
-    <div className="card">
+    <div className="card" itemScope itemType="http://schema.org/Event">
       {/* {eventImage} */}
       <div
         className="card-content"
         style={{ padding: "0.5rem", position: "relative" }}
-        data-date={eventDate.format("YYYY-MM-DD")}
       >
         <Ribbon
           position="top-right"
@@ -100,34 +95,58 @@ const EventCard = ({ event }) => {
         <div className="columns">
           <h2 className="column title is-size-3">
             <Link href="/evento/[slug]" as={`/evento/${event.slug}`}>
-              <a className="has-text-black">{event.nombre}</a>
+              <a className="has-text-black">
+                <span itemProp="name">{event.nombre}</span>
+              </a>
             </Link>
           </h2>
         </div>
 
         <div className="content event-body">
-          <p className="is-size-6">{event.cuerpo}</p>
+          <p className="is-size-6" itemProp="description">
+            {event.cuerpo}
+          </p>
         </div>
         <div className="columns is-mobile event-venue">
-          <div className="column">
-            <h3 className="title is-size-6">
-              <Link href="/lugar/[slug]" as={`/lugar/${event.venue.slug}`}>
-                <a>{event.venue.nombre}</a>
-              </Link>
-            </h3>
-
-            {event.venue.direccion && (
-              <h4
-                className="subtitle is-size-7 has-text-weight-normal"
-                style={{ marginBottom: 0 }}
+          {event.venue ? (
+            <div
+              className="column"
+              itemProp="location"
+              itemScope
+              itemType="http://schema.org/Place"
+            >
+              <h3 className="title is-size-6" style={{ marginBottom: 0 }}>
+                <Link href="/lugar/[slug]" as={`/lugar/${event.venue.slug}`}>
+                  <a>
+                    <span itemProp="name">{event.venue.nombre}</span>
+                  </a>
+                </Link>
+              </h3>
+              <div
+                itemProp="address"
+                itemScope
+                itemType="http://schema.org/PostalAddress"
               >
-                {event.venue.direccion}
-              </h4>
-            )}
-            <h4 className="subtitle has-text-weight-normal is-size-7">
-              {event.venue.city.nombre}
-            </h4>
-          </div>
+                {event.venue.direccion && (
+                  <h4
+                    className="subtitle is-size-7 has-text-weight-normal"
+                    style={{ marginBottom: 0 }}
+                    itemProp="streetAddress"
+                  >
+                    {event.venue.direccion}
+                  </h4>
+                )}
+                <h4
+                  itemProp="addressLocality"
+                  className="subtitle has-text-weight-normal is-size-7"
+                  style={{ marginBottom: 0 }}
+                >
+                  {event.venue.city.nombre}
+                </h4>
+                <meta itemProp="addressCountry" content="AR" />
+              </div>
+            </div>
+          ) : null}
           <a
             className="column is-narrow has-text-right has-text-black"
             style={{
@@ -180,6 +199,10 @@ const EventCard = ({ event }) => {
         </div>
       </div>
       <footer className="card-footer">
+        <meta
+          itemProp="startDate"
+          content={`${moment(event.fecha).format("YYYY-MM-DD")}T${event.hora}`}
+        />
         <div className="card-footer-item" style={{ padding: 0 }}>
           <LittleCalendar fecha={event.fecha} className={ribbonClass} />
         </div>
