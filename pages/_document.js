@@ -43,13 +43,13 @@ class MyDocument extends Document {
               __html: `
   // Your web app's Firebase configuration
   var firebaseConfig = {
-    apiKey: ${config.firebase.apiKey},
-    authDomain: ${config.firebase.authDomain},
-    databaseURL: ${config.firebase.databaseURL},
-    projectId: ${config.firebase.projectId},
+    apiKey: "${config.firebase.apiKey}",
+    authDomain: "${config.firebase.authDomain}",
+    databaseURL: "${config.firebase.databaseURL}",
+    projectId: "${config.firebase.projectId}",
     storageBucket: "",
-    messagingSenderId: ${config.firebase.messagingSenderId},
-    appId: ${config.firebase.appId}"
+    messagingSenderId: "${config.firebase.messagingSenderId}",
+    appId: "${config.firebase.appId}"
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);`
