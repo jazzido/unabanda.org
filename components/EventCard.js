@@ -70,10 +70,7 @@ const EventCard = ({ event }) => {
   const currentDate = moment()
     .tz(config.timeZone)
     .startOf("day");
-  const eventDate = moment(event.fecha)
-    .tz(config.timeZone)
-    .startOf("day");
-
+  const eventDate = moment(event.fecha);
   const daysDiff = eventDate.diff(currentDate, "days");
   const ribbonClass = RIBBON_CLASSES[daysDiff] || "despues";
   const ribbonContent = daysDiff >= 2 ? `${daysDiff} días` : null;
