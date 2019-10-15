@@ -95,7 +95,11 @@ const LugarPage = props => {
           className="section has-vertical-scroll-stop"
           style={{ paddingBottom: 0 }}
         >
-          <div className="container ">
+          <div
+            className="container"
+            itemScope
+            itemType="http://schema.org/Place"
+          >
             <div
               className="columns has-margin-bottom-10 is-vcentered"
               style={{ alignItems: "flex-end" }}
@@ -103,7 +107,7 @@ const LugarPage = props => {
               <div className="column">
                 <h3 className="subtitle is-size-5-mobile">Eventos en</h3>
                 <h2 className="title is-size-2-mobile is-size-1">
-                  {venue.nombre}{" "}
+                  <span itemProp="name">{venue.nombre}</span>{" "}
                   {venue.instagramUsername ? (
                     <a
                       href={`https://instagram.com/${venue.instagramUsername}`}
@@ -132,9 +136,21 @@ const LugarPage = props => {
                     ""
                   )}
                 </h2>
-                <h3 className="subtitle is-size-4  is-size-5-mobile">
-                  {venue.direccion ? `${venue.direccion} ∙` : null}{" "}
-                  {venue.city && venue.city.nombre}
+                <h3
+                  className="subtitle is-size-4 is-size-5-mobile"
+                  itemProp="address"
+                  itemScope
+                  itemType="http://schema.org/PostalAddress"
+                >
+                  {venue.direccion ? (
+                    <span>
+                      <span itemProp="streetAddress">{venue.direccion}</span> •
+                    </span>
+                  ) : null}{" "}
+                  {venue.city && (
+                    <span itemProp="addressLocality">{venue.city.nombre}</span>
+                  )}
+                  <meta itemProp="addressCountry" content="AR" />
                 </h3>
               </div>
             </div>
