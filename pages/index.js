@@ -1,5 +1,4 @@
 import App from "../components/App";
-import { useRouter } from "next/router";
 import { withApollo } from "../lib/apollo";
 import mapValues from "lodash/mapValues";
 
@@ -26,7 +25,11 @@ const IndexPage = props => {
             <div className="column is-7-mobile is-10-tablet">
               <PeriodSelector currentPeriod={currentPeriod} />
             </div>
-            <div className="column is-5-mobile is-2-tablet">
+            <div
+              className="column is-5-mobile is-2-tablet"
+              style={{ paddingTop: 0 }}
+            >
+              <span style={{ fontSize: "0.6rem" }}>Auspicia</span>
               <a href="https://vorterixbahia.com/" target="_blank">
                 <LogoVorterix width="100%" />
               </a>
