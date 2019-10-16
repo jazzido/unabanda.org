@@ -27,6 +27,15 @@ const AcercaDe = () => {
               independiente y amplio; aspiramos a cubrir todos los géneros
               musicales.
             </p>
+            <p>
+              Si te interesa el diseño o la programación, y tenés ganas de
+              colaborar con <Logo fillColor="black" width="60px" />, el código
+              fuente del sitio está publicado:{" "}
+              <a href="https://github.com/jazzido/unabanda.org" target="_blank">
+                <tt>github.com/jazzido/unabanda.org</tt>
+              </a>
+              .
+            </p>
           </div>
         </div>
       </section>
