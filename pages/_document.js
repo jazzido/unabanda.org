@@ -5,6 +5,8 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import config from "../lib/config";
 
+config.defaultSeo.facebook.appId;
+
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx);
@@ -35,6 +37,32 @@ class MyDocument extends Document {
           <script src="https://www.gstatic.com/firebasejs/6.6.1/firebase-messaging.js" />
         </Head>
         <body>
+          <script
+            type="text/javascript"
+            dangerouslySetInnerHTML={{
+              __html: `
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '${config.defaultSeo.facebook.appId}',
+            cookie     : true,
+            xfbml      : true,
+            version    : '4.0'
+          });
+            
+          FB.AppEvents.logPageView();   
+            
+        };
+      
+        (function(d, s, id){
+           var js, fjs = d.getElementsByTagName(s)[0];
+           if (d.getElementById(id)) {return;}
+           js = d.createElement(s); js.id = id;
+           js.src = "https://connect.facebook.net/en_US/sdk.js";
+           fjs.parentNode.insertBefore(js, fjs);
+         }(document, 'script', 'facebook-jssdk'));
+        `
+            }}
+          ></script>
           <Main />
           <NextScript />
           <script
