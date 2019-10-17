@@ -34,7 +34,7 @@ const FechaPage = props => {
           images: [
             {
               url: `${config.siteUrl}/static/calendars/${mDate.format(
-                "DD-MM"
+                "MM-DD"
               )}.png`,
               width: 256,
               height: 256,
