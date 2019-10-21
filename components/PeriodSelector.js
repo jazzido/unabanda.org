@@ -8,7 +8,7 @@ import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 import config from "../lib/config";
 
-const FECHA_EQ_QUERY = `
+export const FECHA_EQ_QUERY = `
   query EventsForDate($date: String) {
     allEvents(sort: FECHA_ASC, filters: { fecha: $date }) {
       edges {
