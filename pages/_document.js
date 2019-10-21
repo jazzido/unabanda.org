@@ -46,7 +46,7 @@ class MyDocument extends Document {
             appId      : '${config.defaultSeo.facebook.appId}',
             cookie     : true,
             xfbml      : true,
-            version    : '4.0'
+            version    : 'v4.0'
           });
             
           FB.AppEvents.logPageView();   
