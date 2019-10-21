@@ -20,6 +20,11 @@ const config = withBundleAnalyzer(
       generateSw: true,
       workboxOpts: {
         swDest: "static/service-worker.js",
+        exclude: [
+          /\.(?:png|jpg|jpeg|svg)$/,
+          /build-manifest\.json$/,
+          /react-loadable-manifest\.json$/
+        ],
         runtimeCaching: [
           {
             urlPattern: /^https?.*/,
@@ -55,7 +60,5 @@ const config = withBundleAnalyzer(
     })
   )
 );
-
-console.log(config);
 
 module.exports = config;
