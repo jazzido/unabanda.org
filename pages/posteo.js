@@ -79,8 +79,6 @@ const PosteoPage = props => {
     ];
   }, []);
 
-  console.log(fechas);
-
   const date = moment(fecha) || hoy;
 
   const doQuery = useQuery(
@@ -149,7 +147,7 @@ const PosteoPage = props => {
           </div>
         </div>
       </div>
-      <div className="section">
+      <div className="section has-vertical-scroll-stop">
         <div className="container box">{content}</div>
       </div>
     </App>
