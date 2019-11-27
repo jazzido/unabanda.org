@@ -40,6 +40,9 @@ main {
   color: black !important;
 }
 
+// redefine some Bulma variables
+$section-padding: 1.5rem 0.75rem;
+
 @import "../node_modules/bulma/bulma.sass";
 @import "../node_modules/bulma-helpers/bulma-helpers.sass";
 
@@ -71,7 +74,7 @@ html {
     scroll-behavior: smooth;
     scroll-padding-left: 2px;
     scroll-padding-right: 2px;
-    padding: 5px;
+    padding: 2px;
 
     &.cards-container > div:first-child {
       display: flex;
