@@ -215,6 +215,10 @@ const EventCard = ({ event }) => {
       </footer>
       <style jsx>
         {`
+          h2 {
+            font-family: "Fira Sans Condensed";
+            font-size: 30px;
+          }
           .share-popup {
             width: 110px;
             position: absolute;
