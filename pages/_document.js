@@ -89,11 +89,11 @@ class MyDocument extends Document {
               __html: `
 
         // Setup a listener to track Add to Homescreen events.
-        window.addEventListener('beforeinstallprompt', function(e) {
-          e.userChoice.then(function(choiceResult) {
-            ga('send', 'event', 'A2H', choiceResult.outcome);
-          });
-        });
+        // window.addEventListener('beforeinstallprompt', function(e) {
+        //   e.userChoice.then(function(choiceResult) {
+        //     ga('send', 'event', 'A2H', choiceResult.outcome);
+        //   });
+        // });
 
         if ("serviceWorker" in navigator) {
           navigator.serviceWorker

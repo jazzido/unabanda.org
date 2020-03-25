@@ -15,6 +15,10 @@ const App = ({ children }) => (
         content="initial-scale=1.0, width=device-width"
         key="viewport"
       />
+      <link
+        href="https://fonts.googleapis.com/css?family=Fira+Sans+Condensed&display=swap"
+        rel="stylesheet"
+      />
       <link rel="manifest" href="/manifest.json" />
       <link rel="shortcut icon" href="/static/icons/icon-48x48.png" />
       <link

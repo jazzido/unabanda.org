@@ -18,6 +18,23 @@
       }
     },
     {
+      "src": "^/build-manifest.json$",
+      "dest": "/_next/build-manifest.json",
+      "headers": {
+        "cache-control": "public, max-age=0, immutable",
+        "Service-Worker-Allowed": "/"
+      }
+    },
+    {
+      "src": "^/react-loadable-manifest.json$",
+      "dest": "/_next/react-loadable-manifest.json",
+      "headers": {
+        "cache-control": "public, max-age=0, immutable",
+        "Service-Worker-Allowed": "/"
+      }
+    },
+
+    {
       "src": "^/firebase-messaging-sw.js$",
       "dest": "/_next/static/firebase-messaging-sw.js",
       "headers": {
