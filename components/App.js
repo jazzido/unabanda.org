@@ -59,7 +59,7 @@ const App = ({ children }) => (
       />
     </Head>
 
-    <NotificationPrompt />
+    {/* <NotificationPrompt /> */}
     <Header />
     <div
       style={{
