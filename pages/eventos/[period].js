@@ -37,10 +37,10 @@ const PeriodPage = props => {
               className="column is-5-mobile is-2-tablet"
               style={{ paddingTop: 0 }}
             >
-              <span style={{ fontSize: "0.6rem" }}>Auspicia</span>
+              {/* <span style={{ fontSize: "0.6rem" }}>Auspicia</span>
               <a href="https://vorterixbahia.com/" target="_blank">
                 <LogoVorterix width="100%" />
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

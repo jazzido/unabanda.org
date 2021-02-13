@@ -17,9 +17,9 @@ import { ID_REGEX, today } from "../../lib/helpers";
 
 const VENUE_EVENTS_QUERY = `
   query EventsForVenue($venue_at_record_id: String, $today: String) {
-    allEvents(
-      sort: FECHA_ASC
-      filters: { venueAtRecordId: $venue_at_record_id, fechaGte: $today }
+    event (
+      sort: fecha,
+      filter: { venue: { eq: $venue_at_record_id }, fecha: {gte: $today} }
     ) {
       edges {
         node {
@@ -31,15 +31,17 @@ const VENUE_EVENTS_QUERY = `
 `;
 
 const VENUE_QUERY = gql`
-  query Venue($venue_id: Int) {
-    venue(venueId: $venue_id) {
-      nombre
-      direccion
-      instagramUsername
-      facebookUrl
-      atRecordId
-      city {
+  query Venue($venue_id: String) {
+    venue(filter: { at_record_id: { eq: $venue_id } }) {
+      nodes {
         nombre
+        direccion
+        instagram_username
+        facebook_url
+        at_record_id
+        city {
+          nombre
+        }
       }
     }
   }
@@ -67,6 +69,7 @@ const LugarPage = props => {
   let content;
 
   if (error) {
+    console.log(error);
     content = (
       <section
         className="section events-by-date"
@@ -87,7 +90,8 @@ const LugarPage = props => {
   } else if (!data.venue) {
     content = <Error statusCode="404" />;
   } else {
-    const { venue } = data;
+    
+    const venue = data.venue.nodes[0];
     content = (
       <div>
         <Seo title={`Eventos en ${venue.nombre} (${venue.city.nombre})`} />
@@ -159,7 +163,7 @@ const LugarPage = props => {
         <EventsByDate
           query={VENUE_EVENTS_QUERY}
           variables={{
-            venue_at_record_id: venue.atRecordId,
+            venue_at_record_id: venue.at_record_id,
             today: today()
           }}
         />

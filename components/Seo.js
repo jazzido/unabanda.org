@@ -4,7 +4,7 @@ import merge from "lodash/merge";
 
 import config from "../lib/config";
 
-function mergeSeo(seoProps) {
+const mergeSeo = (seoProps) => {
   const m = merge({ ...config.defaultSeo }, seoProps);
   if (seoProps.title) {
     m.openGraph.title = m.titleTemplate
@@ -12,7 +12,7 @@ function mergeSeo(seoProps) {
       : seoProps.title;
   }
   return m;
-}
+};
 
 const Seo = props => {
   const router = useRouter();

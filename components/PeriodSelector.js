@@ -10,7 +10,7 @@ import config from "../lib/config";
 
 export const FECHA_EQ_QUERY = `
   query EventsForDate($date: String) {
-    allEvents(sort: FECHA_ASC, filters: { fecha: $date }) {
+    event(sort: fecha, filter: { fecha: { eq: $date } }) {
       edges {
         node {
           ...EventFields
@@ -22,7 +22,7 @@ export const FECHA_EQ_QUERY = `
 
 const FECHA_GTE_QUERY = `
   query EventsForDateAndAfter($date: String) {
-    allEvents(sort: FECHA_ASC, filters: { fechaGte: $date }) {
+    event(sort: fecha, filter: { fecha: {gte: $date} }) {
       edges {
         node {
           ...EventFields
@@ -34,9 +34,9 @@ const FECHA_GTE_QUERY = `
 
 const FECHA_BETWEEN_QUERY = `
   query EventsBetweenDates($fromDate: String, $toDate: String) {
-    allEvents(
-      sort: FECHA_ASC
-      filters: { and: { fechaGte: $fromDate, fechaLte: $toDate } }
+    event(
+      sort: fecha
+      filter: {fecha: {gte: $fromDate, lte: $toDate} } 
     ) {
       edges {
         node {

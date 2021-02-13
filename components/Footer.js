@@ -1,30 +1,33 @@
-import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import moment from "moment-timezone";
+import fetch from "isomorphic-unfetch";
 import "moment/locale/es";
 
 import config from "../lib/config";
 
 const Footer = props => {
-  const doQuery = useQuery(
-    gql`
-      {
-        lastModified
-      }
-    `,
-    {
-      notifyOnNetworkStatusChange: true
+  const [lastModified, setLastModified] = useState();
+  const [loading, setLoading] = useState(true);
+  const error = false;
+  
+  useEffect(async () => {
+    let response;
+    const fetchData = async () => {
+      response = await fetch(`${config.apiEndpoint}/unabanda/last_modified.json`);
+      const json = await response.json();
+      console.log(json.rows[0][0])
+      setLastModified(json.rows[0][0]);
+      setLoading(false);
     }
-  );
-
-  const { loading, error, data, fetchMore, networkStatus } = doQuery;
+    fetchData();
+  }, []);
 
   const content =
     loading || error ? (
       <div className="loadingspinner" style={{ width: 15, height: 15 }} />
     ) : (
-      moment(data.lastModified)
+      moment(lastModified)
         .tz(config.timeZone)
         .locale("es")
         .format("dddd D [de] MMMM [de] YYYY [a las] HH:MM")

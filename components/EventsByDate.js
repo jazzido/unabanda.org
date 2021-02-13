@@ -15,21 +15,23 @@ import EventCard from "./EventCard";
 
 export const queryFragments = {
   eventFields: gql`
-    fragment EventFields on Event {
+    fragment EventFields on event {
       nombre
       fecha
       hora
       cuerpo
-      atLastModified
+      at_last_modified
       slug
+      at_record_id
       venue {
+        at_record_id
         nombre
         direccion
-        instagramUsername
-        facebookUrl
-        venueId
+        instagram_username
+        facebook_url
         slug
         city {
+          at_record_id
           nombre
         }
       }
@@ -192,7 +194,8 @@ const EventsByDate = ({ style, query, variables = {} }) => {
     );
   }
 
-  const { edges: allEvents } = data.allEvents;
+  console.log("XXX", data);
+  const { edges: allEvents } = data.event;
 
   return (
     <section className="section events-by-date">

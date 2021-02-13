@@ -15,9 +15,11 @@ import { ID_REGEX } from "../../lib/helpers";
 import { queryFragments } from "../../components/EventsByDate";
 
 const EVENT_QUERY = gql`
-  query Event($event_id: Int) {
-    event(eventId: $event_id) {
-      ...EventFields
+  query Event($event_id: String) {
+    event(filter: { at_record_id: { eq: $event_id } }) {
+      nodes {
+        ...EventFields
+      }
     }
   }
   ${queryFragments.eventFields}
@@ -58,7 +60,7 @@ const EventPage = props => {
   } else if (!data.event) {
     content = <Error statusCode="404" />;
   } else {
-    const { event } = data;
+    const event  = data.event.nodes[0];
     const mDate = moment(event.fecha).locale("es");
 
     const title = `${mDate.format("DD/MM")}: ${event.nombre}${(event.venue

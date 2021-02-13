@@ -75,7 +75,7 @@ const EventCard = ({ event }) => {
   const ribbonClass = RIBBON_CLASSES[daysDiff] || "despues";
   const ribbonContent = daysDiff >= 2 ? `${daysDiff} días` : null;
 
-  const eventUrl = `/evento/${event.slug}`;
+  const eventUrl = `/evento/${event.at_record_id}-${event.slug}`;
   const eventAbsoluteUrl = `${config.siteUrl}${eventUrl}`;
 
   const [isShareOpen, setIsShareOpen] = useState(false);
@@ -94,7 +94,7 @@ const EventCard = ({ event }) => {
 
         <div className="columns">
           <h2 className="column title is-size-3">
-            <Link href="/evento/[slug]" as={`/evento/${event.slug}`}>
+            <Link href="/evento/[slug]" as={`/evento/${event.at_record_id}-${event.slug}`}>
               <a className="has-text-black">
                 <span itemProp="name">{event.nombre}</span>
               </a>
@@ -116,7 +116,7 @@ const EventCard = ({ event }) => {
               itemType="http://schema.org/Place"
             >
               <h3 className="title is-size-6" style={{ marginBottom: 0 }}>
-                <Link href="/lugar/[slug]" as={`/lugar/${event.venue.slug}`}>
+                <Link href="/lugar/[slug]" as={`/lugar/${event.venue.at_record_id}-${event.venue.slug}`}>
                   <a>
                     <span itemProp="name">{event.venue.nombre}</span>
                   </a>
