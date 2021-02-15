@@ -5,7 +5,6 @@ import mapValues from "lodash/mapValues";
 import EventsByDate from "../components/EventsByDate";
 import Seo from "../components/Seo";
 import PeriodSelector, { periodsByPath } from "../components/PeriodSelector";
-import LogoVorterix from "../components/LogoVorterix";
 
 const IndexPage = props => {
   const currentPeriod = periodsByPath[""];

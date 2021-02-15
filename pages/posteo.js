@@ -96,15 +96,17 @@ const PosteoPage = props => {
 
   const { loading, error, data, fetchMore, networkStatus } = doQuery;
 
-  let content;
+    let content;
   if (loading) {
     content = <div className="loadingspinner"></div>;
   } else if (data) {
+    const { edges: allEvents } = data.event;
     content = (
       <div className="content">
         <p>Agenda unabanda {date.format("dddd D [de] MMMM [de] YYYY")}</p>
+
         {Object.entries(
-          groupBy(data.allEvents.edges, e => e.node.venue.city.nombre)
+          groupBy(allEvents, e => e.node.venue.city.nombre)
         ).map(([cityNombre, edges]) => {
           return (
             <p key={cityNombre}>
