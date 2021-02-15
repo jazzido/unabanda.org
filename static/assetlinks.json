@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "org.unabanda.twa",
+      "sha256_cert_fingerprints": [
+        "EF:CB:94:ED:DB:8A:64:2F:2E:E6:F8:BD:F4:AD:3C:89:AA:2A:BF:79:F2:DC:F3:B7:1B:4D:14:47:A6:E4:A4:D9"
+      ]
+    }
+  }
+]

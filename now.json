@@ -49,6 +49,14 @@
         "cache-control": "public, max-age=0, immutable",
         "Service-Worker-Allowed": "/"
       }
+    },
+    {
+      "src": "^/.well-known/assetlinks.json$",
+      "dest": "/_next/static/assetlinks.json",
+      "headers": {
+        "cache-control": "public, max-age=0, immutable",
+        "Service-Worker-Allowed": "/"
+      }
     }
   ]
 }
