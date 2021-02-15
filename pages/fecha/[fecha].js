@@ -9,7 +9,7 @@ import config from "../../lib/config";
 
 const DATE_EVENTS_QUERY = `
   query EventsForDate($fecha: String) {
-    events(sort_asc: hora, filter: { fecha: { eq: $fecha } }) {
+    event(sort: hora, filter: { fecha: { eq: $fecha } }) {
       edges {
         node {
           ...EventFields
