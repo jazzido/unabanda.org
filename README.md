@@ -10,7 +10,7 @@
 
 Con `yarn && yarn dev`, deberías salir andando. Son bienvenidos los pull requests y —sobre todo— mejoras en el diseño e interfaz de usuario.
 
-El backend por default es `https://unabandaql.nerdpower.org`, el endpoint GraphQL que usamos en producción. Es sólo-lectura, así que se puede usar ese para desarrollo.
+El backend por default es `https://datasette.unabanda.org`, el endpoint GraphQL que usamos en producción. Es sólo-lectura, así que se puede usar ese para desarrollo.
 
 # Licencia
 
