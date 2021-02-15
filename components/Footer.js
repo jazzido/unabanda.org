@@ -24,7 +24,7 @@ const Footer = () => {
 
   const content =
     loading || error ? (
-      <span gclassName="loadingspinner" style={{ width: 15, height: 15 }} />
+      <span className="loadingspinner" style={{ width: 15, height: 15 }} />
     ) : (
       moment(lastModified)
         .tz(config.timeZone)
