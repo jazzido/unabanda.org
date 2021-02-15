@@ -8,9 +8,11 @@ import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 import config from "../lib/config";
 
+const PAGE_SIZE = 100;
+
 export const FECHA_EQ_QUERY = `
   query EventsForDate($date: String) {
-    event(sort: fecha, filter: { fecha: { eq: $date } }) {
+    event(sort: fecha, filter: { fecha: { eq: $date } }, first: ${PAGE_SIZE}) {
       edges {
         node {
           ...EventFields
@@ -22,7 +24,7 @@ export const FECHA_EQ_QUERY = `
 
 const FECHA_GTE_QUERY = `
   query EventsForDateAndAfter($date: String) {
-    event(sort: fecha, filter: { fecha: {gte: $date} }) {
+    event(sort: fecha, filter: { fecha: {gte: $date} }, first: ${PAGE_SIZE}) {
       edges {
         node {
           ...EventFields
@@ -35,8 +37,9 @@ const FECHA_GTE_QUERY = `
 const FECHA_BETWEEN_QUERY = `
   query EventsBetweenDates($fromDate: String, $toDate: String) {
     event(
-      sort: fecha
-      filter: {fecha: {gte: $fromDate, lte: $toDate} } 
+      sort: fecha,
+      filter: {fecha: {gte: $fromDate, lte: $toDate} },
+      first: ${PAGE_SIZE}
     ) {
       edges {
         node {
