@@ -46,6 +46,12 @@
       "src": "/static/icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "/static/logos/logo-1024.png",
+      "sizes": "1024x1024 512x512 384x284 256x256 192x192 144x144 92x96 72x72 48x48",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

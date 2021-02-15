@@ -15,6 +15,7 @@ const App = ({ children }) => (
         content="initial-scale=1.0, width=device-width"
         key="viewport"
       />
+      <meta name="theme-color" content="#317EFB"/>
       <link
         href="https://fonts.googleapis.com/css?family=Fira+Sans+Condensed&display=swap"
         rel="stylesheet"
