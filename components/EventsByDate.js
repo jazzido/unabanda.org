@@ -194,7 +194,6 @@ const EventsByDate = ({ style, query, variables = {} }) => {
     );
   }
 
-  console.log("XXX", data);
   const { edges: allEvents } = data.event;
 
   return (

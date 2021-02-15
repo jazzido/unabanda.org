@@ -6,17 +6,16 @@ import "moment/locale/es";
 
 import config from "../lib/config";
 
-const Footer = props => {
+const Footer = () => {
   const [lastModified, setLastModified] = useState();
   const [loading, setLoading] = useState(true);
   const error = false;
   
-  useEffect(async () => {
+  useEffect(() => {
     let response;
     const fetchData = async () => {
       response = await fetch(`${config.apiEndpoint}/unabanda/last_modified.json`);
       const json = await response.json();
-      console.log(json.rows[0][0])
       setLastModified(json.rows[0][0]);
       setLoading(false);
     }
@@ -25,7 +24,7 @@ const Footer = props => {
 
   const content =
     loading || error ? (
-      <div className="loadingspinner" style={{ width: 15, height: 15 }} />
+      <span gclassName="loadingspinner" style={{ width: 15, height: 15 }} />
     ) : (
       moment(lastModified)
         .tz(config.timeZone)
