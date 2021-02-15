@@ -166,6 +166,7 @@ const LugarPage = props => {
             venue_at_record_id: venue.at_record_id,
             today: today()
           }}
+          groupByCity={false}
         />
       </div>
     );

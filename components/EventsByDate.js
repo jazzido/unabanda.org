@@ -164,7 +164,7 @@ const CardsContainer = ({ events }) => {
   );
 };
 
-const EventsByDate = ({ style, query, variables = {} }) => {
+const EventsByDate = ({ style, query, variables = {}, groupByCity = true }) => {
   const doQuery = useQuery(
     gql`
       ${query}
@@ -201,6 +201,35 @@ const EventsByDate = ({ style, query, variables = {} }) => {
       <div className="container">
         {getEventsByDate(allEvents).map(({ date: dateString, events }) => {
           const mDate = moment(dateString).locale("es");
+          
+          let cards;
+          if (groupByCity) {
+            // Bahía Blanca siempre primero
+            const sorted = Object.entries(groupBy(events, "venue.city.nombre")).sort((a,b) => {
+              const [ cityA, eventsA ] = a; const [ cityB, eventsB ] = b;
+              if (cityA === "Bahía Blanca") {
+                return -1000;
+              }
+              else if (cityA < cityB) {
+                return -1;
+              }
+              else if (cityA > cityB) {
+                return 1;
+              }
+              else {
+                return 0;
+              }
+            })
+            cards = sorted.map(([cityName, cityEvents]) => {
+              return <div key={cityName}>
+                <h3 className="is-size-3-tablet is-size-5 has-margin-bottom-5-tablet has-margin-top-5 has-vertical-scroll-stop has-text-black">{cityName}</h3>
+                <CardsContainer events={cityEvents} />
+              </div>;
+            });
+          }
+          else {
+            cards = <CardsContainer events={events} />
+          }
 
           return (
             <div
@@ -208,7 +237,7 @@ const EventsByDate = ({ style, query, variables = {} }) => {
               key={dateString}
             >
               <h2
-                className="is-size-2-tablet is-size-4 has-margin-bottom-20-tablet"
+                className="is-size-2-tablet is-size-4 has-margin-bottom-10-tablet"
                 data-date={mDate.format("YYYY-MM-DD")}
               >
                 <Link
@@ -228,7 +257,7 @@ const EventsByDate = ({ style, query, variables = {} }) => {
                   </a>
                 </Link>
               </h2>
-              <CardsContainer events={events} />
+              {cards}
             </div>
           );
         })}
