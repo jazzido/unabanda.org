@@ -83,7 +83,7 @@ const EventPage = props => {
             ]
           }}
         />
-        <section className="section">
+        <section className="section has-vertical-scroll-stop">
           <div className="columns">
             <div className="column is-half-tablet is-offset-one-quarter-tablet">
               {loading ? (

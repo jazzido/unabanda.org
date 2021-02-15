@@ -220,9 +220,9 @@ const EventsByDate = ({ style, query, variables = {}, groupByCity = true }) => {
                 return 0;
               }
             })
-            cards = sorted.map(([cityName, cityEvents]) => {
-              return <div key={cityName}>
-                <h3 className="is-size-3-tablet is-size-5 has-margin-bottom-5-tablet has-margin-top-5 has-vertical-scroll-stop has-text-black">{cityName}</h3>
+            cards = sorted.map(([cityName, cityEvents], i) => {
+              return <div key={i}>
+                <h3 className="is-size-3-tablet is-size-5 has-margin-bottom-5-tablet has-margin-top-5 has-text-black has-vertical-scroll-stop">{cityName}</h3>
                 <CardsContainer events={cityEvents} />
               </div>;
             });
