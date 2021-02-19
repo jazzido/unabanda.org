@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 import Logo from "./Logo.js";
-import Search from "./Search";
+// import Search from "./Search";
 const Header = () => {
   const [navBarActive, setNavBarActive] = useState(false);
   return (

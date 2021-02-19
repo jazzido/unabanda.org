@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import moment from "moment-timezone";
 import fetch from "isomorphic-unfetch";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTelegram, faFacebook
+} from "@fortawesome/free-brands-svg-icons";
+
 import "moment/locale/es";
 
 import config from "../lib/config";
@@ -38,10 +43,12 @@ const Footer = () => {
         <p>
           Última actualización: <strong>{content}</strong>
         </p>
-        <div className="columns">
-          <div className="column is-2 is-offset-2" />
+        <div className="columns has-text-centered">
           <div className="column is-narrow has-text-centered">
-            <a> Recibir notificaciones</a>
+            <a href="https://facebook.com/unabandaorg" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faFacebook} size="2x" /> facebook.com/unabandaorg</a>
+          </div>
+          <div className="column is-narrow has-text-centered">
+            <a href="https://t.me/unabanda" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faTelegram} size="2x" /> t.me/unabanda</a>
           </div>
           <div className="column is-narrow has-text-centered">
             <Link href="/acercade">

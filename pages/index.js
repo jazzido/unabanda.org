@@ -1,6 +1,10 @@
 import App from "../components/App";
 import { withApollo } from "../lib/apollo";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import mapValues from "lodash/mapValues";
+import {
+  faTelegram
+} from "@fortawesome/free-brands-svg-icons";
 
 import EventsByDate from "../components/EventsByDate";
 import Seo from "../components/Seo";
@@ -16,7 +20,7 @@ const IndexPage = props => {
         className="section has-vertical-scroll-stop"
         style={{
           paddingTop: "1rem",
-          paddingBottom: 0
+          paddingBottom: 0,
         }}
       >
         <div className="container">
@@ -25,20 +29,24 @@ const IndexPage = props => {
               <PeriodSelector currentPeriod={currentPeriod} />
             </div>
             <div
-              className="column is-5-mobile is-2-tablet"
-              style={{ paddingTop: 0 }}
+              className="column is-5-mobile is-2-tablet is-size-7 is-size-6-tablet"
+              style={{ paddingTop: 0}}
             >
-              {/* <span style={{ fontSize: "0.6rem" }}>Auspicia</span>
-              <a href="https://vorterixbahia.com/" target="_blank">
-                <LogoVorterix width="100%" />
-              </a> */}
+              <span>Suscribite en Telegram!</span>
+              <a href="https://t.me/unabanda" target="_blank" rel="noreferrer">
+                <FontAwesomeIcon
+                  icon={faTelegram}
+                  size="2x"
+                  style={{ display: "inline", color: "rgb(0, 136, 204)" }}
+                />
+              </a>
             </div>
           </div>
         </div>
       </div>
       <EventsByDate
         query={currentPeriod.query}
-        variables={mapValues(currentPeriod.variables, v =>
+        variables={mapValues(currentPeriod.variables, (v) =>
           v.format("YYYY-MM-DD")
         )}
       />
