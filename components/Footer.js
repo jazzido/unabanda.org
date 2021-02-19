@@ -43,26 +43,30 @@ const Footer = () => {
         <p>
           Última actualización: <strong>{content}</strong>
         </p>
-        <div className="columns has-text-centered">
-          <div className="column is-narrow has-text-centered">
-            <a href="https://facebook.com/unabandaorg" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faFacebook} size="2x" /> facebook.com/unabandaorg</a>
-          </div>
-          <div className="column is-narrow has-text-centered">
-            <a href="https://t.me/unabanda" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faTelegram} size="2x" /> t.me/unabanda</a>
-          </div>
-          <div className="column is-narrow has-text-centered">
-            <Link href="/acercade">
-              <a>
-                Acerca de <strong>unabanda</strong>
-              </a>
-            </Link>
-          </div>
-          <div className="column is-narrow has-text-centered">
-            <Link href="/enviarevento">
-              <a>Envianos info de tu evento</a>
-            </Link>
-          </div>
-        </div>
+        <p>
+          <a
+            href="https://facebook.com/unabandaorg"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <FontAwesomeIcon icon={faFacebook} size="2x" />{" "}
+            facebook.com/unabandaorg
+          </a>
+          <br />
+          <a href="https://t.me/unabanda" target="_blank" rel="noreferrer">
+            <FontAwesomeIcon icon={faTelegram} size="2x" /> t.me/unabanda
+          </a>
+        </p>
+        <p>
+          <Link href="/acercade">
+            <a>
+              Acerca de <strong>unabanda</strong>
+            </a>
+          </Link>{"  "}
+          <Link href="/enviarevento">
+            <a>Envianos info de tu evento</a>
+          </Link>
+        </p>
         <p>
           contacto: <strong>hola@unabanda.org</strong>
         </p>
