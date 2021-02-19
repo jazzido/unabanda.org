@@ -50,7 +50,7 @@ const FECHA_BETWEEN_QUERY = `
   }
 `;
 
-const today = () => moment(new Date(), config.timeZone);
+const today = () => moment().tz("America/Argentina/Buenos_Aires");
 
 export const PERIODS = [
   {
