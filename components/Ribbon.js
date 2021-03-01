@@ -25,6 +25,7 @@ const Ribbon = ({ position, className, content }) => {
           }
           /* common */
           .ribbon {
+            opacity: 0.9;
             width: 80px;
             height: 80px;
             overflow: hidden;

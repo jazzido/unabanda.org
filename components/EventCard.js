@@ -104,7 +104,7 @@ const EventCard = ({ event }) => {
         </div>
 
         <div className="content event-body">
-          <p className="is-size-6" itemProp="description">
+          <p className="is-size-6" style={{lineHeight: 1.2}} itemProp="description">
             {event.cuerpo}
           </p>
         </div>
