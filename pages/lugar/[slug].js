@@ -112,9 +112,9 @@ const LugarPage = props => {
                 <h3 className="subtitle is-size-5-mobile">Eventos en</h3>
                 <h2 className="title is-size-2-mobile is-size-1">
                   <span itemProp="name">{venue.nombre}</span>{" "}
-                  {venue.instagramUsername ? (
+                  {venue.instagram_username ? (
                     <a
-                      href={`https://instagram.com/${venue.instagramUsername}`}
+                      href={`https://instagram.com/${venue.instagram_username}`}
                       rel="noopener noreferrer"
                       target="_blank"
                     >
@@ -125,10 +125,10 @@ const LugarPage = props => {
                   ) : (
                     ""
                   )}{" "}
-                  {venue.facebookUrl ? (
+                  {venue.facebook_url ? (
                     <span className="icon">
                       <a
-                        href={venue.facebookUrl}
+                        href={venue.facebook_url}
                         rel="noopener noreferrer"
                         target="_blank"
                         className="icon"
