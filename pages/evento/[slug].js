@@ -1,3 +1,4 @@
+import Link from "next/link";
 import App from "../../components/App";
 import { withApollo } from "../../lib/apollo";
 import { useRouter } from "next/router";
@@ -78,9 +79,9 @@ const EventPage = props => {
                 )}.png`,
                 width: 256,
                 height: 256,
-                alt: mDate.format("D [de] MMMM [de] YYYY")
-              }
-            ]
+                alt: mDate.format("D [de] MMMM [de] YYYY"),
+              },
+            ],
           }}
         />
         <section className="section has-vertical-scroll-stop">
@@ -93,6 +94,32 @@ const EventPage = props => {
               )}
             </div>
           </div>
+          <div className="columns">
+            <div className="column is-half-tablet is-offset-one-quarter-tablet">
+              Ver otros eventos en{" "}
+              <Link
+                href="/lugar/[slug]"
+                as={`/lugar/${event.venue.at_record_id}-${event.venue.slug}`}
+              >
+                <a>
+                  <span itemProp="name">{event.venue.nombre} ({event.venue.city.nombre})</span>
+                </a>
+              </Link>
+            </div>
+          </div>
+          <div className="columns">
+            <div className="column is-half-tablet is-offset-one-quarter-tablet">
+              Más eventos el día {" "}
+              <Link
+                  href={"/fecha/[fecha]"}
+                  as={`/fecha/${mDate.format("YYYY-MM-DD")}`}
+                >
+                <a>
+                  <span itemProp="name">{mDate.format("D [de] MMMM [de] YYYY")}</span>
+                </a>
+              </Link>
+            </div>
+          </div>          
         </section>
       </div>
     );
