@@ -44,7 +44,7 @@ const Header = () => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <a href="https://t.me/unabanda" target="_blank" rel="noreferrer" style={{"color": "white", "font-weight": "bold"}}>
+              <a className="has-text-white-tablet" href="https://t.me/unabanda" target="_blank" rel="noreferrer" style={{"font-weight": "bold"}}>
                 <span style={{"vertical-align": "super"}}>Suscribite en Telegram!</span>
                 <FontAwesomeIcon
                   icon={faTelegram}

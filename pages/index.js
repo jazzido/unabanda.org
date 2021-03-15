@@ -14,7 +14,8 @@ const IndexPage = props => {
     <App>
       <Seo title={currentPeriod.name} />
       <div
-        className="section has-vertical-scroll-stop"
+        className="section has-vertical-scroll-stop
+        "
         style={{
           paddingTop: "1rem",
           paddingBottom: 0,
