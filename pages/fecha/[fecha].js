@@ -2,6 +2,9 @@ import App from "../../components/App";
 import { withApollo } from "../../lib/apollo";
 import { useRouter } from "next/router";
 import moment from "moment-timezone";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTelegram } from "@fortawesome/free-brands-svg-icons";
+
 
 import EventsByDate from "../../components/EventsByDate";
 import Seo from "../../components/Seo";
@@ -55,7 +58,21 @@ const FechaPage = (props) => {
         <div className="container">
           <div className="columns is-mobile is-vcentered">
             <div className="column is-7-mobile is-10-tablet">
-              {/* <PeriodSelector currentPeriod={currentPeriod} /> */}
+              <a
+                href="https://t.me/unabanda"
+                target="_blank"
+                rel="noreferrer"
+                style={{ "font-weight": "bold" }}
+              >
+                <span style={{ "vertical-align": "super" }}>
+                  Suscribite en Telegram!
+                </span>
+                <FontAwesomeIcon
+                  icon={faTelegram}
+                  size="2x"
+                  style={{ display: "inline-block", color: "rgb(0, 136, 204)" }}
+                />
+              </a>
             </div>
             <div className="column is-5-mobile is-2-tablet is-size-7 is-size-6-tablet">
               <a href="https://vorterixbahia.com/" target="_blank">
