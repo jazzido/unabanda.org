@@ -78,7 +78,7 @@ const App = ({ children }) => (
       <script dangerouslySetInnerHTML={{__html: FB_PIXEL }} />
     </Head>
 
-    <NotificationPrompt />
+    {/* <NotificationPrompt /> */}
     <Header />
     <div
       style={{
