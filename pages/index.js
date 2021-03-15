@@ -1,14 +1,11 @@
 import App from "../components/App";
 import { withApollo } from "../lib/apollo";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import mapValues from "lodash/mapValues";
-import {
-  faTelegram
-} from "@fortawesome/free-brands-svg-icons";
 
 import EventsByDate from "../components/EventsByDate";
 import Seo from "../components/Seo";
 import PeriodSelector, { periodsByPath } from "../components/PeriodSelector";
+import LogoVorterix from "../components/LogoVorterix";
 
 const IndexPage = props => {
   const currentPeriod = periodsByPath[""];
@@ -30,15 +27,9 @@ const IndexPage = props => {
             </div>
             <div
               className="column is-5-mobile is-2-tablet is-size-7 is-size-6-tablet"
-              style={{ paddingTop: 0}}
             >
-              <span>Suscribite en Telegram!</span>
-              <a href="https://t.me/unabanda" target="_blank" rel="noreferrer">
-                <FontAwesomeIcon
-                  icon={faTelegram}
-                  size="2x"
-                  style={{ display: "inline", color: "rgb(0, 136, 204)" }}
-                />
+              <a href="https://vorterixbahia.com/" target="_blank">
+                <LogoVorterix width="100%" />
               </a>
             </div>
           </div>
