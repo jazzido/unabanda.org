@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@apollo/react-hooks": "3.0.0",
@@ -33,6 +34,7 @@
     "next": "^9.3.2",
     "next-offline": "^5.0.0-beta.7",
     "next-seo": "^4.17.0",
+    "next-sitemap": "^1.5.18",
     "node-sass": "^4.12.0",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
@@ -43,6 +45,7 @@
   "license": "ISC",
   "devDependencies": {
     "@next/bundle-analyzer": "^9.1.1",
+    "@types/react": "^17.0.3",
     "eslint": "^6.5.1",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.3.0",
@@ -52,7 +55,8 @@
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.15.0",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "prettier": ">= 1.13.0"
+    "prettier": ">= 1.13.0",
+    "typescript": "^4.2.3"
   },
   "peerDependencies": {
     "webpack": "^4.19.1"
