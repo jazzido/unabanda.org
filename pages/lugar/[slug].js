@@ -14,6 +14,7 @@ import gql from "graphql-tag";
 import EventsByDate from "../../components/EventsByDate";
 import Seo from "../../components/Seo";
 import { ID_REGEX, today } from "../../lib/helpers";
+import config from "../../lib/config";
 
 const VENUE_EVENTS_QUERY = `
   query EventsForVenue($venue_at_record_id: String, $today: String) {
@@ -39,6 +40,7 @@ const VENUE_QUERY = gql`
         instagram_username
         facebook_url
         at_record_id
+        slug
         city {
           nombre
         }
@@ -94,7 +96,10 @@ const LugarPage = props => {
     const venue = data.venue.nodes[0];
     content = (
       <div>
-        <Seo title={`Eventos en ${venue.nombre} (${venue.city.nombre})`} />
+        <Seo 
+          title={`Eventos en ${venue.nombre} (${venue.city.nombre})`}
+          canonical={`${config.siteUrl}/evento/${venue.at_record_id}-${venue.slug}`}
+        />
         <section
           className="section has-vertical-scroll-stop"
           style={{ paddingBottom: 0 }}

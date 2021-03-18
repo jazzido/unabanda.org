@@ -71,6 +71,7 @@ const EventPage = props => {
       <div className="container">
         <Seo
           title={title}
+          canonical={`${config.siteUrl}/evento/${event.at_record_id}-${event.slug}`}
           openGraph={{
             images: [
               {

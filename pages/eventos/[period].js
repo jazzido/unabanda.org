@@ -7,6 +7,7 @@ import mapValues from "lodash/mapValues";
 import EventsByDate from "../../components/EventsByDate";
 import Seo from "../../components/Seo";
 import PeriodSelector, { periodsByPath } from "../../components/PeriodSelector";
+import config from "../../lib/config";
 
 const PeriodPage = props => {
   const router = useRouter();
@@ -19,7 +20,10 @@ const PeriodPage = props => {
 
   return (
     <App>
-      <Seo title={currentPeriod.name} />
+      <Seo 
+        title={currentPeriod.name}
+        canonical={`${config.siteUrl}/${currentPeriod.path === "" ? "" : "eventos/" + currentPeriod.path}`}
+      />
       <div
         className="section has-vertical-scroll-stop"
         style={{

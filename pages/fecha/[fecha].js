@@ -34,6 +34,7 @@ const FechaPage = (props) => {
     <App>
       <Seo
         title={`Eventos para el ${mDate.format("dddd D [de] MMMM [de] YYYY")}`}
+        canonical={`${config.siteUrl}/fecha/${fecha}`}
         openGraph={{
           images: [
             {
