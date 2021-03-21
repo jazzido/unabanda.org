@@ -44,7 +44,7 @@ const EventPage = props => {
     },
     notifyOnNetworkStatusChange: true
   });
-  const { loading, error, data, fetchMore, networkStatus } = query;
+  const { loading, error, data /*, fetchMore, networkStatus */ } = query;
   let content;
 
   if (error) {
@@ -58,8 +58,8 @@ const EventPage = props => {
     );
   } else if (loading) {
     content = <div className="loadingspinner" />;
-  } else if (!data.event) {
-    content = <Error statusCode="404" />;
+  } else if (data.event && data.event.nodes.length === 0) {
+    content = <Error statusCode={404} />;
   } else {
     const event  = data.event.nodes[0];
     const mDate = moment(event.fecha).locale("es");

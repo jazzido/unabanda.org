@@ -67,7 +67,7 @@ const LugarPage = props => {
     },
     notifyOnNetworkStatusChange: true
   });
-  const { loading, error, data, fetchMore, networkStatus } = query;
+  const { loading, error, data /*, fetchMore, networkStatus */ } = query;
   let content;
 
   if (error) {
@@ -89,8 +89,8 @@ const LugarPage = props => {
         <div className="loadingspinner"></div>
       </section>
     );
-  } else if (!data.venue) {
-    content = <Error statusCode="404" />;
+  } else if (data.venue && data.venue.nodes.length === 0) {
+    content = <Error statusCode={404} />;
   } else {
     
     const venue = data.venue.nodes[0];
