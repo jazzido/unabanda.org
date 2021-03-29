@@ -29,9 +29,19 @@ const App = ({ children }) => (
         key="viewport"
       />
       <meta name="theme-color" content="#317EFB"/>
+      <link 
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossOrigin
+      />
       <link
-        href="https://fonts.googleapis.com/css?family=Fira+Sans+Condensed&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed&display=swap"
+        rel="preload" as="style"
+      />
+      <link
         rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed&display=swap"
+        media="print" onLoad="this.media='all'" 
       />
       <link rel="manifest" href="/manifest.json" />
       <link rel="shortcut icon" href="/static/icons/icon-48x48.png" />
