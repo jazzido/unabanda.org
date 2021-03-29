@@ -40,7 +40,7 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-share": "^3.0.1",
-    "webpack": "^4.0.0"
+    "webpack": "^4.19.1"
   },
   "license": "ISC",
   "devDependencies": {

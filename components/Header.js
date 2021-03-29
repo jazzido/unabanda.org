@@ -44,12 +44,12 @@ const Header = () => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <a className="has-text-white-tablet" href="https://t.me/unabanda" target="_blank" rel="noreferrer" style={{"font-weight": "bold"}}>
-                <span style={{"vertical-align": "super"}}>Suscribite en Telegram!</span>
+              <a className="has-text-white link-telegram" href="https://t.me/unabanda" target="_blank" rel="noreferrer">
+                <strong style={{"verticalAlign": "super"}}>Suscribite en Telegram!</strong>
                 <FontAwesomeIcon
                   icon={faTelegram}
                   size="2x"
-                  style={{ display: "inline-block", color: "rgb(0, 136, 204)" }}
+                  style={{ display: "inline", color: "rgb(0, 136, 204)", height: "33px", width: "33px" }}
                 />
               </a>
             </div>
