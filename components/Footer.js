@@ -47,13 +47,13 @@ const Footer = () => {
           <a
             href="https://facebook.com/unabandaorg"
             target="_blank"
-            rel="noreferrer"
+            rel="noreferrer noopener"
           >
             <FontAwesomeIcon icon={faFacebook} size="2x" />{" "}
             facebook.com/unabandaorg
           </a>
           <br />
-          <a href="https://t.me/unabanda" target="_blank" rel="noreferrer">
+          <a href="https://t.me/unabanda" target="_blank" rel="noreferrer noopener">
             <FontAwesomeIcon icon={faTelegram} size="2x" /> t.me/unabanda
           </a>
         </p>
@@ -72,18 +72,20 @@ const Footer = () => {
         </p>
         <p>
           <a
-            rel="license"
+            rel="license noopener noreferrer"
             href="http://creativecommons.org/licenses/by-sa/4.0/"
+            target="_blank"
           >
             <img
               alt="Licencia Creative Commons"
               src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"
+              width="88" height="31"
             />
           </a>
           <br />
           Esta obra está bajo una{" "}
           <a
-            rel="license"
+            rel="license noopener noreferrer"
             href="http://creativecommons.org/licenses/by-sa/4.0/"
           >
             Licencia Creative Commons Atribución-CompartirIgual 4.0
