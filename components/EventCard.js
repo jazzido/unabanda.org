@@ -161,7 +161,7 @@ const EventCard = ({ event }) => {
               <FontAwesomeIcon
                 icon={faShareAlt}
                 size="sm"
-                style={{ flex: "1 0 auto" }}
+                style={{ flex: "1 0 auto", width: "12.26px", height: "14px" }}
               />
             </span>
           </a>
