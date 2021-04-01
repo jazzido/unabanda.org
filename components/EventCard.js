@@ -219,6 +219,7 @@ const EventCard = ({ event }) => {
           h2 {
             font-family: "Fira Sans Condensed";
             font-size: 30px;
+            letter-spacing: -2px;
           }
           .share-popup {
             width: 110px;

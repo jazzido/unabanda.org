@@ -5,7 +5,7 @@ import { withRouter } from "next/router";
 
 import "moment/locale/es";
 
-import NotificationPrompt from "./NotificationPrompt";
+// import NotificationPrompt from "./NotificationPrompt";
 
 const FB_PIXEL = `
 !function(f,b,e,v,n,t,s)
@@ -32,7 +32,7 @@ const App = ({ children }) => (
       <link 
         rel="preconnect"
         href="https://fonts.gstatic.com"
-        crossOrigin
+        crossOrigin="true"
       />
       <link
         href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed&display=swap"
