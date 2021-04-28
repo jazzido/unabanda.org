@@ -1,6 +1,6 @@
 import React from "react";
 
-export default ({ fillColor, width }) => {
+const Logo = ({ fillColor, width }) => {
   return (
     <svg
       viewBox="0 0 307 65"
@@ -15,3 +15,5 @@ export default ({ fillColor, width }) => {
     </svg>
   );
 };
+
+export default Logo;
